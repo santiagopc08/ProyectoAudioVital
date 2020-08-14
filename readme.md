@@ -1,0 +1,1 @@
+En este archivo se especificará información relevante del proyecto conforme este avance. 14/08/2020.
