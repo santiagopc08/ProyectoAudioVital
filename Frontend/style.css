@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=Alata&display=swap');
+:root {
+    /*Primary color*/
+    --primaryLight: #4877b5;
+    --primary: #014c85;
+    --primaryDark: #002558;
+    /*Secondary color*/
+    --secondaryLight: #6fffff;
+    --secondary: #22e0cc;
+    --secondaryDark: #00ad9b;
+    font-family: 'Alata', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.btn.focus,
+.btn:focus {
+    outline: 0;
+    box-shadow: none;
+}
+
+button {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.gridContainer {
+    display: grid;
+    margin: 0;
+    grid-template-columns: 1fr 6fr 1fr;
+    grid-template-areas: "header header header" "left content right";
+}
+
+.header {
+    grid-area: header;
+    color: white;
+    background-color: var(--primary);
+    margin: 0;
+}
+
+.content {
+    grid-area: content;
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.btnOptBarL {
+    background-color: var(--secondary);
+    border: var(--secondaryDark) 0.15rem solid;
+    border-radius: 1rem 0 0 1rem;
+    color: white;
+    border-right: var(--secondaryDark) 0.05rem solid;
+    padding: 1rem;
+    margin: 0;
+    transition: 0.5s;
+    font-family: 'Alata', sans-serif;
+    font-size: 1.3rem;
+}
+
+.btnOptBarR {
+    background-color: white;
+    border: var(--secondaryDark) 0.15rem solid;
+    border-radius: 0 1rem 1rem 0;
+    color: var(--secondaryDark);
+    border-left: var(--secondaryDark) 0.05rem solid;
+    padding: 1rem;
+    margin: 0;
+    transition: 0.5s;
+    font-family: 'Alata', sans-serif;
+    font-size: 1.3rem;
+}
+
+.optBarContainer {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    border: 2px var(--mRed) solid;
+    border-radius: 5px;
+    width: max-content;
+    background: var(--mRed);
+}
+
+.innerContent {
+    border-radius: 1rem;
+    border: var(--primaryDark) 0.2rem solid;
+    margin-top: 1rem;
+}
+
+.innerH2 {
+    color: white;
+    margin: -0.2rem;
+    background: var(--primary);
+    padding: 0.7rem;
+    border-radius: 1rem 1rem 0 0;
+    border: var(--primaryDark) solid 0.2rem;
+    border-bottom: none;
+}
