@@ -53,7 +53,36 @@
                         <h2>Llena la información para una cita nueva</h2>
                     </div>
                     <center>
-                        <form>
+                        <div style="margin-top: 1rem;" id="calendarioContainer">
+                            <button class="boton" id="btnFechaSeleccionada" onclick='mostrarCalendario()' style="display: none;"></button>
+                            <div id="calendar">
+                                <caption style="margin-bottom: 0.5rem;">Selecciona la fecha</caption>
+                                <table cellspacing="0" id="calendarDiv">
+                                    <thead>
+                                        <tr id="trMonthYear">
+                                            <th style="padding: 0.4rem 0rem;" colspan="1">
+                                                <img style="display: none;" id="thPrev" src="resources/prev.svg" alt="prev" class="calendarLoad" onclick="prevMonth()">
+                                            </th>
+                                            <th style="padding: 0.4rem 0rem;" colspan="5" id="thMonthYear"></th>
+                                            <th style="padding: 0.4rem 0rem;" colspan="1" id="thNext">
+                                                <img src="resources/next.svg" alt="next" id="thNext" class="calendarLoad" onclick="nextMonth()">
+                                            </th>
+                                        </tr>
+                                        <tr id="trWeekDays">
+                                            <th class="thWeekDay">Lu</th>
+                                            <th class="thWeekDay">Ma</th>
+                                            <th class="thWeekDay">Mi</th>
+                                            <th class="thWeekDay">Ju</th>
+                                            <th class="thWeekDay">Vi</th>
+                                            <th class="thWeekDay">Sa</th>
+                                            <th class="thWeekDay">Do</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="calendarBody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <form id="formularioContainer">
                             <div class="inputContainer">
                                 <input id="nombre" class="materialInput" type="text" required>
                                 <label class="materialLabel">Nombre de usuario</label>
