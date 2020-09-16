@@ -59,6 +59,7 @@ body {
     transition: 0.5s;
     font-family: 'Alata', sans-serif;
     font-size: 1.3rem;
+    width: 16ch;
 }
 
 .btnOptBarR {
@@ -72,6 +73,7 @@ body {
     transition: 0.5s;
     font-family: 'Alata', sans-serif;
     font-size: 1.3rem;
+    width: 16ch;
 }
 
 .optBarContainer {
@@ -125,6 +127,7 @@ form {
     padding-bottom: 1rem;
     height: max-content;
     transition: 0.5s;
+    margin-top: -1rem;
 }
 
 .inputContainer {
@@ -299,6 +302,7 @@ form {
 
 .boton {
     padding: 0.5rem 1rem;
+    height: 3rem;
     font-family: inherit;
     font-size: 1.1rem;
     background-color: var(--primary);
@@ -340,7 +344,7 @@ form {
 .calendarLoad {
     height: 1rem;
     width: 1rem;
-    background: var(--secondaryDark);
+    background: white;
     border: none;
     border-radius: 100%;
     transition: 0.3s ease all;
@@ -352,27 +356,27 @@ form {
 }
 
 .calendarLoad:hover {
-    background-color: var(--secondary);
+    background-color: var(--primaryLight);
     color: white;
 }
 
-#calendarDiv {
+.calendarDiv {
     border-radius: 0.3rem;
     border: 0.15rem solid var(--primaryDark);
     width: max-content;
 }
 
-#trMonthYear,
-#trWeekDays {
+.trMonthYear,
+.trWeekDays {
     color: white;
 }
 
-#trMonthYear {
+.trMonthYear {
     background: var(--primaryDark);
     border-style: solid;
 }
 
-#trWeekDays {
+.trWeekDays {
     background: var(--primary);
 }
 

@@ -4,9 +4,33 @@ var btnOptBarR = document.getElementById("btnOptBarR")
 var agendarContainer = document.getElementById("agendarContainer")
 var citasContainer = document.getElementById("citasContainer")
 
+//Para el calendario
+var btnFechaSeleccionada = document.getElementById("btnFechaSeleccionadaVer")
+var calendar = document.getElementById("calendarVer")
+var thPrev = document.getElementById("thPrevVer")
+var thMonthYear = document.getElementById("thMonthYearVer")
+var thNext = document.getElementById("thNextVer")
+var calendarBody = document.getElementById("calendarBodyVer")
+var actualDate = new Date()
+var htmlBody = ""
+var counter = 1
+var actualMonth = actualDate.getMonth()
+var todaysDate = new Date()
+var monthsString = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+    "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+]
+generateMonth(actualDate)
+
 function showAgendar() {
     citasContainer.style.display = "none";
     agendarContainer.style.display = "initial";
+    btnFechaSeleccionada = document.getElementById("btnFechaSeleccionada")
+    calendar = document.getElementById("calendar")
+    thPrev = document.getElementById("thPrev")
+    thMonthYear = document.getElementById("thMonthYear")
+    thNext = document.getElementById("thNext")
+    calendarBody = document.getElementById("calendarBody")
+    generateMonth(actualDate)
 
     setTimeout(function() {
         btnOptBarL.style.backgroundColor = "white"
@@ -26,6 +50,12 @@ function showAgendar() {
 function showCitas() {
     agendarContainer.style.display = "none";
     citasContainer.style.display = "initial";
+    btnFechaSeleccionada = document.getElementById("btnFechaSeleccionadaVer")
+    calendar = document.getElementById("calendarVer")
+    thPrev = document.getElementById("thPrevVer")
+    thMonthYear = document.getElementById("thMonthYearVer")
+    thNext = document.getElementById("thNextVer")
+    calendarBody = document.getElementById("calendarBodyVer")
 
     setTimeout(function() {
         btnOptBarR.style.backgroundColor = "white"
@@ -64,22 +94,6 @@ function habilitarValorCopago() {
 }
 
 //Código que soporta el calendario
-var calendarBody = document.getElementById("calendarBody")
-var calendar = document.getElementById("calendar")
-var btnFechaSeleccionada = document.getElementById("btnFechaSeleccionada")
-
-var htmlBody = ""
-var counter = 1
-var thMonthYear = document.getElementById("thMonthYear")
-var thNext = document.getElementById("thNext")
-var thPrev = document.getElementById("thPrev")
-var actualDate = new Date()
-var actualMonth = actualDate.getMonth()
-var todaysDate = new Date()
-var monthsString = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-    "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
-]
-generateMonth(actualDate)
 
 function generateHtml(monthMatrix) {
     thMonthYear.innerHTML = monthsString[actualDate.getMonth()] + " de " + actualDate.getFullYear()
@@ -166,7 +180,7 @@ function prevMonth() {
     generateMonth(actualDate)
 }
 
-console.log(calendar.style.visibility + " xd")
+var citasAgendadasContainer = document.getElementById("citasAgendadasContainer")
 
 function mostrarFechaSeleccionada(dia) {
     var fecha = new Date(actualDate.getFullYear(), actualMonth, dia)
@@ -174,10 +188,41 @@ function mostrarFechaSeleccionada(dia) {
     btnFechaSeleccionada.style.display = "inherit"
     calendar.style.display = "none"
     thPrev.style.visibility = "hidden"
+    citasAgendadasContainer.style.display = "unset"
+    mostrarHoras()
 }
 
 function mostrarCalendario() {
     btnFechaSeleccionada.style.display = "none"
     calendar.style.display = "inherit"
     thPrev.style.visibility = "visible"
+    horasNuevaCita.innerHTML = ""
+    citasAgendadasContainer.style.display = "none"
+}
+
+var horasNuevaCita = document.getElementById("horasNuevaCita")
+var btnHoraSeleccionada = document.getElementById("btnHoraSeleccionada")
+var horaStr = ""
+
+function mostrarHoras() {
+    var concat = "<p>Selecciona una hora para la cita</p>"
+    var horasDisponibles = 19
+    for (let i = 8; i < horasDisponibles; i++) {
+        if (i < 12) {
+            horaStr = i + ":00 AM"
+        } else if (i > 13) {
+            horaStr = i - 12 + ":00 PM"
+        }
+        concat += "<button style='margin-right: 0.5rem;' onclick='mostrarHoraSeleccionada()' class='boton'>" + horaStr + "</button>"
+    }
+
+    horasNuevaCita.innerHTML = concat
+    horasNuevaCita.style.display = "initial"
+    btnHoraSeleccionada.style.display = "none"
+}
+
+function mostrarHoraSeleccionada() {
+    btnHoraSeleccionada.innerHTML = horaStr
+    horasNuevaCita.style.display = "none"
+    btnHoraSeleccionada.style.display = "inherit"
 }

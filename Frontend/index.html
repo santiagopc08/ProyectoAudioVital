@@ -23,11 +23,12 @@
         <div class="content">
             <center>
                 <div class="optBarContainer">
-                    <button class="btnOptBarL" id="btnOptBarL" onclick="showCitas()">Citas para hoy</button>
-                    <button class="btnOptBarR" id="btnOptBarR" onclick="showAgendar()">Agendar cita</button>
+                    <button class="btnOptBarL" id="btnOptBarL" onclick="showCitas()">Agenda</button>
+                    <button class="btnOptBarR" id="btnOptBarR" onclick="showAgendar()">Asignar cita</button>
                 </div>
             </center>
             <div style="display: grid;">
+                <!-- Ver agenda -->
                 <div id="citasContainer" class="innerContent">
                     <div class="innerH2">
                         <center>
@@ -35,14 +36,48 @@
                                 <img class="imgVector" style="height: 5rem; width: 5rem;" id="imgAgendar" src="resources/calendar.svg" alt="agendar">
                             </div>
                         </center>
-                        <h2>Esto tenemos para hoy</h2>
+                        <h2>Selecciona una fecha para ver las citas asignadas</h2>
                     </div>
-                    <p style="padding: 0rem 1rem;">Sed egestas in augue in feugiat. Maecenas ligula mi, laoreet et vehicula non, semper eu nisl. Ut vitae porttitor tortor, ac pretium nisi. Interdum et malesuada fames ac ante ipsum primis in faucibus. Donec commodo quam quis arcu mollis
-                        tempor. Etiam auctor imperdiet diam, eu eleifend justo. In id laoreet nulla, ut mattis velit. In blandit interdum justo, vel condimentum sem placerat a. Donec elementum elit et velit pellentesque dictum. Fusce a dolor lectus. Morbi
-                        imperdiet lobortis dapibus. Cras ut justo in arcu tempus finibus non eu neque. Fusce et nulla ornare, facilisis ex eget, lacinia augue. Maecenas pretium, ligula at lobortis elementum, augue dui bibendum dolor, sed posuere ipsum
-                        purus id ex. Phasellus facilisis erat et pretium ultrices. Donec porttitor et erat et tristique.
-                    </p>
+                    <!-- Calendario Ver -->
+                    <center style="margin-bottom: 1rem;">
+                        <div style="margin-top: 1rem;">
+                            <button class="boton" id="btnFechaSeleccionadaVer" onclick='mostrarCalendario()' style="display: none;"></button>
+                            <div id="calendarVer">
+                                <caption style="margin-bottom: 0.5rem;">Selecciona la fecha</caption>
+                                <table cellspacing="0" class="calendarDiv">
+                                    <thead>
+                                        <tr class="trMonthYear">
+                                            <th style="padding: 0.4rem 0rem;" colspan="1">
+                                                <img style="display: none;" id="thPrevVer" src="resources/prev.svg" alt="prev" class="calendarLoad" onclick="prevMonth()">
+                                            </th>
+                                            <th style="padding: 0.4rem 0rem;" colspan="5" id="thMonthYearVer"></th>
+                                            <th style="padding: 0.4rem 0rem;" colspan="1" id="thNextVer">
+                                                <img src="resources/next.svg" alt="next" class="calendarLoad" onclick="nextMonth()">
+                                            </th>
+                                        </tr>
+                                        <tr class="trWeekDays">
+                                            <th class="thWeekDay">Lu</th>
+                                            <th class="thWeekDay">Ma</th>
+                                            <th class="thWeekDay">Mi</th>
+                                            <th class="thWeekDay">Ju</th>
+                                            <th class="thWeekDay">Vi</th>
+                                            <th class="thWeekDay">Sa</th>
+                                            <th class="thWeekDay">Do</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="calendarBodyVer"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- CitasAgendadas -->
+                        <div id="citasAgendadasContainer" style="display: none;">
+                            <div>
+                                <p>No hay citas para esta fecha</p>
+                                <img style="height: 7rem; width: 7rem;" src="resources/nothing.svg" alt="Aún no hay citas">
+                            </div>
+                        </div>
                 </div>
+                <!-- Nueva cita -->
                 <div id="agendarContainer" class="innerContent">
                     <div class="innerH2">
                         <center>
@@ -52,23 +87,24 @@
                         </center>
                         <h2>Llena la información para una cita nueva</h2>
                     </div>
+                    <!-- Calendario -->
                     <center>
-                        <div style="margin-top: 1rem;" id="calendarioContainer">
+                        <div style="margin-top: 1rem;">
                             <button class="boton" id="btnFechaSeleccionada" onclick='mostrarCalendario()' style="display: none;"></button>
                             <div id="calendar">
                                 <caption style="margin-bottom: 0.5rem;">Selecciona la fecha</caption>
-                                <table cellspacing="0" id="calendarDiv">
+                                <table cellspacing="0" class="calendarDiv">
                                     <thead>
-                                        <tr id="trMonthYear">
+                                        <tr class="trMonthYear">
                                             <th style="padding: 0.4rem 0rem;" colspan="1">
                                                 <img style="display: none;" id="thPrev" src="resources/prev.svg" alt="prev" class="calendarLoad" onclick="prevMonth()">
                                             </th>
                                             <th style="padding: 0.4rem 0rem;" colspan="5" id="thMonthYear"></th>
                                             <th style="padding: 0.4rem 0rem;" colspan="1" id="thNext">
-                                                <img src="resources/next.svg" alt="next" id="thNext" class="calendarLoad" onclick="nextMonth()">
+                                                <img src="resources/next.svg" alt="next" class="calendarLoad" onclick="nextMonth()">
                                             </th>
                                         </tr>
-                                        <tr id="trWeekDays">
+                                        <tr class="trWeekDays">
                                             <th class="thWeekDay">Lu</th>
                                             <th class="thWeekDay">Ma</th>
                                             <th class="thWeekDay">Mi</th>
@@ -82,18 +118,24 @@
                                 </table>
                             </div>
                         </div>
+                        <!-- Lista de horarios disponibles -->
+                        <div id="horasNuevaCitaContainer" style="margin-top: 1rem;">
+                            <button class="boton" id="btnHoraSeleccionada" onclick='mostrarHoras()' style="display: none;"></button>
+                            <div id="horasNuevaCita"></div>
+                        </div>
+                        <!-- Formulario de cita -->
                         <form id="formularioContainer">
                             <div class="inputContainer">
                                 <input id="nombre" class="materialInput" type="text" required>
-                                <label class="materialLabel">Nombre de usuario</label>
+                                <label class="materialLabel">Nombre de usuario *</label>
                             </div>
                             <div class="inputContainer">
                                 <input id="nId" class="materialInput" type="number" required>
-                                <label class="materialLabel">Número de identificación</label>
+                                <label class="materialLabel">Número de identificación *</label>
                             </div>
                             <div class="inputContainer">
                                 <input id="numTel1" class="materialInput" type="number" required>
-                                <label class="materialLabel">Número celular</label>
+                                <label class="materialLabel">Número celular *</label>
                             </div>
                             <div class="inputContainer">
                                 <input id="numTel2" class="materialInput" type="number" required>
@@ -115,7 +157,7 @@
                             </div>
                             <div class="inputContainer" style="grid-column: 1/3;">
                                 <input id="entidad" class="materialInput" type="text" required>
-                                <label class="materialLabel">Entidad de salud</label>
+                                <label class="materialLabel">Entidad de salud *</label>
                             </div>
                         </form>
                         <button class="boton">Guardar</button>
