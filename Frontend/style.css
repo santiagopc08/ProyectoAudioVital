@@ -62,6 +62,18 @@ body {
     width: 16ch;
 }
 
+.btnOptBarM {
+    background-color: white;
+    border: var(--secondaryDark) 0.15rem solid;
+    color: var(--secondaryDark);
+    border-left: var(--secondaryDark) 0.05rem solid;
+    padding: 1rem;
+    margin: 0;
+    transition: 0.5s;
+    font-family: 'Alata', sans-serif;
+    font-size: 1.3rem;
+}
+
 .btnOptBarR {
     background-color: white;
     border: var(--secondaryDark) 0.15rem solid;
@@ -114,6 +126,12 @@ h2 {
 }
 
 #agendarContainer {
+    opacity: 0;
+    z-index: -1;
+    display: none;
+}
+
+#registrarContainer {
     opacity: 0;
     z-index: -1;
     display: none;
