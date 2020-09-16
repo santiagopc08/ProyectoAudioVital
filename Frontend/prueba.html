@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h1 id="nombre"></h1>
+    <h2 id="_id"></h2>
+    <h3 id="celular"></h3>
+    <h3 id="celular2"></h3>
+    <p id="o">HOLA</p>
+    <div class="row p-4">
+        <button onclick="obtener_datos()">OBTENER EVENTOS</button>
+    </div>
+
+
+    <form id="formularioContainer">
+        <div class="inputContainer">
+            <input name="_id" id="nId" class="materialInput" type="number" required>
+            <label class="materialLabel">Número de identificación</label>
+        </div>
+        <div class="inputContainer">
+            <input name="nombre" id="nombreP" class="materialInput" type="text" required>
+            <label class="materialLabel">Nombre de usuario</label>
+        </div>
+        <div class="inputContainer">
+            <input name="celular" id="numTel1" class="materialInput" type="number" required>
+            <label class="materialLabel">Número celular</label>
+        </div>
+        <div class="inputContainer">
+            <input name="celularOpcional" id="numTel2" class="materialInput" type="number" required>
+            <label class="materialLabel">Otro número celular</label>
+        </div>
+
+        <button class="boton" type="button" onclick="registrar()">Guardar</button>
+    </form>
+
+
+    <script src="./consumirApi.js"></script>
+</body>
+
+</html>

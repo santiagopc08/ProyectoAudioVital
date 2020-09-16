@@ -4,6 +4,7 @@ const Cita = new Schema({
     _id: Number,
     cedula: Number,
     fecha: String,
+    hora: String,
     documentos: String,
     copago: Boolean,
     valorCopago: Number,

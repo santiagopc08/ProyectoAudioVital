@@ -1,16 +1,74 @@
 var btnOptBarL = document.getElementById("btnOptBarL")
+var btnOptBarM = document.getElementById("btnOptBarM")
 var btnOptBarR = document.getElementById("btnOptBarR")
 
 var agendarContainer = document.getElementById("agendarContainer")
+var registrarContainer = document.getElementById("registrarContainer")
 var citasContainer = document.getElementById("citasContainer")
+
+function showCitas() {
+    agendarContainer.style.display = "none";
+    citasContainer.style.display = "initial";
+    registrarContainer.style.display = "none";
+
+    setTimeout(function() {
+        btnOptBarR.style.backgroundColor = "white"
+        btnOptBarR.style.color = "var(--secondaryDark)"
+
+        btnOptBarL.style.backgroundColor = "var(--secondary)"
+        btnOptBarL.style.color = "var(--primaryDark)"
+
+        btnOptBarM.style.backgroundColor = "white"
+        btnOptBarM.style.color = "var(--secondaryDark)"
+
+        citasContainer.style.opacity = 100;
+        citasContainer.style.zIndex = 1;
+
+        agendarContainer.style.opacity = 0;
+        agendarContainer.style.zIndex = -1;
+
+        registrarContainer.style.opacity = 0;
+        registrarContainer.style.zIndex = -1;
+    }, 100);
+}
+
+function showRegistrar() {
+    citasContainer.style.display = "none";
+    registrarContainer.style.display = "initial"
+    agendarContainer.style.display = "none";
+
+    setTimeout(function() {
+        btnOptBarM.style.backgroundColor = "var(--secondary)"
+        btnOptBarM.style.color = "var(--primaryDark)"
+
+        btnOptBarR.style.backgroundColor = "white"
+        btnOptBarR.style.color = "var(--secondaryDark)"
+
+        btnOptBarL.style.backgroundColor = "white"
+        btnOptBarL.style.color = "var(--secondaryDark)"
+
+        registrarContainer.style.opacity = 100;
+        registrarContainer.style.zIndex = 1;
+
+        agendarContainer.style.opacity = 0;
+        agendarContainer.style.zIndex = 1;
+
+        citasContainer.style.opacity = 0;
+        citasContainer.style.zIndex = -1;
+    }, 100);
+}
 
 function showAgendar() {
     citasContainer.style.display = "none";
     agendarContainer.style.display = "initial";
+    registrarContainer.style.display = "none";
 
     setTimeout(function() {
         btnOptBarL.style.backgroundColor = "white"
         btnOptBarL.style.color = "var(--secondaryDark)"
+
+        btnOptBarM.style.backgroundColor = "white"
+        btnOptBarM.style.color = "var(--secondaryDark)"
 
         btnOptBarR.style.backgroundColor = "var(--secondary)"
         btnOptBarR.style.color = "var(--primaryDark)"
@@ -20,25 +78,10 @@ function showAgendar() {
 
         citasContainer.style.opacity = 0;
         citasContainer.style.zIndex = -1;
-    }, 100);
-}
 
-function showCitas() {
-    agendarContainer.style.display = "none";
-    citasContainer.style.display = "initial";
+        registrarContainer.style.opacity = 0;
+        registrarContainer.style.zIndex = -1;
 
-    setTimeout(function() {
-        btnOptBarR.style.backgroundColor = "white"
-        btnOptBarR.style.color = "var(--secondaryDark)"
-
-        btnOptBarL.style.backgroundColor = "var(--secondary)"
-        btnOptBarL.style.color = "var(--primaryDark)"
-
-        citasContainer.style.opacity = 100;
-        citasContainer.style.zIndex = 1;
-
-        agendarContainer.style.opacity = 0;
-        agendarContainer.style.zIndex = -1;
     }, 100);
 }
 
@@ -165,8 +208,6 @@ function prevMonth() {
     actualMonth = month
     generateMonth(actualDate)
 }
-
-console.log(calendar.style.visibility + " xd")
 
 function mostrarFechaSeleccionada(dia) {
     var fecha = new Date(actualDate.getFullYear(), actualMonth, dia)
