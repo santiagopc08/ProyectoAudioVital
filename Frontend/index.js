@@ -73,7 +73,6 @@ function showCitas() {
 }
 
 var textareaDocs = document.getElementById("docs")
-
 expandirDocs()
 
 function expandirDocs() {
