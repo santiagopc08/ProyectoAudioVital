@@ -257,13 +257,13 @@ function obtenerInfoCita() {
     infoCita.numIdentificacion = numIdentificacionInput.value
     infoCita.numTelefono1 = numTelefono1Input.value
     infoCita.entidadSalud = entidadSaludInput.value
-    if (!numTelefono2Input.value.equals("")) {
+    if (numTelefono2Input.value != "") {
         infoCita.numTelefono2 = numTelefono2Input.value
     }
-    if (!documentosInput.value.equals("")) {
+    if (documentosInput.value != "") {
         infoCita.documentos = documentosInput.value
     }
-    if (!copagoInput.value.equals("")) {
+    if (copagoInput.value != "") {
         infoCita.copago = copagoInput.value
     }
     return infoCita
