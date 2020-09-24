@@ -30,6 +30,8 @@ function showAgendar() {
     thMonthYear = document.getElementById("thMonthYear")
     thNext = document.getElementById("thNext")
     calendarBody = document.getElementById("calendarBody")
+    horasNuevaCita.innerHTML = ""
+    actualDate = new Date()
     generateMonth(actualDate)
 
     setTimeout(function() {
@@ -37,7 +39,7 @@ function showAgendar() {
         btnOptBarL.style.color = "var(--secondaryDark)"
 
         btnOptBarR.style.backgroundColor = "var(--secondary)"
-        btnOptBarR.style.color = "var(--primaryDark)"
+        btnOptBarR.style.color = "white"
 
         agendarContainer.style.opacity = 100;
         agendarContainer.style.zIndex = 1;
@@ -62,7 +64,7 @@ function showCitas() {
         btnOptBarR.style.color = "var(--secondaryDark)"
 
         btnOptBarL.style.backgroundColor = "var(--secondary)"
-        btnOptBarL.style.color = "var(--primaryDark)"
+        btnOptBarL.style.color = "white"
 
         citasContainer.style.opacity = 100;
         citasContainer.style.zIndex = 1;
@@ -73,7 +75,6 @@ function showCitas() {
 }
 
 var textareaDocs = document.getElementById("docs")
-expandirDocs()
 
 function expandirDocs() {
     var nRows = textareaDocs.value.split("\n").length;
@@ -181,9 +182,9 @@ function prevMonth() {
 
 var citasAgendadasContainer = document.getElementById("citasAgendadasContainer")
 
-function mostrarFechaSeleccionada(dia) {
-    var fecha = new Date(actualDate.getFullYear(), actualMonth, dia)
-    btnFechaSeleccionada.innerHTML = fecha.getDate() + " de " + monthsString[actualMonth] + " del " + fecha.getFullYear()
+function mostrarFechaSeleccionada(day) {
+    actualDate = new Date(actualDate.getFullYear(), actualMonth, day)
+    btnFechaSeleccionada.innerHTML = actualDate.getDate() + " de " + monthsString[actualMonth] + " del " + actualDate.getFullYear()
     btnFechaSeleccionada.style.display = "inherit"
     calendar.style.display = "none"
     thPrev.style.visibility = "hidden"
@@ -202,6 +203,7 @@ function mostrarCalendario() {
 var horasNuevaCita = document.getElementById("horasNuevaCita")
 var btnHoraSeleccionada = document.getElementById("btnHoraSeleccionada")
 var horaStr = ""
+var horaFloat = 0.0
 
 function mostrarHoras() {
     var concat = "<p>Selecciona una hora para la cita</p>"
@@ -209,8 +211,10 @@ function mostrarHoras() {
     for (let i = 8; i < horasDisponibles; i++) {
         if (i < 12) {
             horaStr = i + ":00 AM"
+            horaFloat = i
         } else if (i > 13) {
             horaStr = i - 12 + ":00 PM"
+            horaFloat = i - 12
         }
         concat += "<button style='margin-right: 0.5rem;' onclick='mostrarHoraSeleccionada()' class='boton'>" + horaStr + "</button>"
     }
@@ -224,4 +228,47 @@ function mostrarHoraSeleccionada() {
     btnHoraSeleccionada.innerHTML = horaStr
     horasNuevaCita.style.display = "none"
     btnHoraSeleccionada.style.display = "inherit"
+}
+
+/**
+ * Esta función retorna un JSON con toda la información empaquetada relevante para una cita,
+ * a continuación se listan todas las llaves y su tipo de dato, las que son obligatorias
+ * estarán marcadas con un * al final
+ * fecha* Date
+ * hora* float (con x.5 se denotará la hora x y 30 minutos)
+ * nombre* String
+ * numIdentificacion* String
+ * numTelefono1* String
+ * numTelefono2 String
+ * documentos String
+ * copago int (Si este valor no es indicado, se entiende que no requiere copago)
+ * entidadSalud String
+ */
+function obtenerInfoCita() {
+    var infoCita = { "fecha": actualDate, "hora": horaFloat }
+    var nombreInput = document.getElementById("nombre")
+    var numIdentificacionInput = document.getElementById("nId")
+    var numTelefono1Input = document.getElementById("numTel1")
+    var numTelefono2Input = document.getElementById("numTel2")
+    var documentosInput = document.getElementById("docs")
+    var copagoInput = document.getElementById("valorCopago")
+    var entidadSaludInput = document.getElementById("entidad")
+    infoCita.nombre = nombreInput.value
+    infoCita.numIdentificacion = numIdentificacionInput.value
+    infoCita.numTelefono1 = numTelefono1Input.value
+    infoCita.entidadSalud = entidadSaludInput.value
+    if (!numTelefono2Input.value.equals("")) {
+        infoCita.numTelefono2 = numTelefono2Input.value
+    }
+    if (!documentosInput.value.equals("")) {
+        infoCita.documentos = documentosInput.value
+    }
+    if (!copagoInput.value.equals("")) {
+        infoCita.copago = copagoInput.value
+    }
+    return infoCita
+}
+
+function mostrarInfoCita() {
+    console.log(obtenerInfoCita())
 }

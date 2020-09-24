@@ -5,9 +5,9 @@
     --primary: #014c85;
     --primaryDark: #002558;
     /*Secondary color*/
-    --secondaryLight: #6fffff;
-    --secondary: #22e0cc;
-    --secondaryDark: #00ad9b;
+    --secondaryLight: #52cab8;
+    --secondary: #009988;
+    --secondaryDark: #006a5b;
     font-family: 'Alata', sans-serif;
     margin: 0;
     padding: 0;
@@ -36,7 +36,7 @@ body {
 
 .header {
     color: white;
-    background: linear-gradient(90deg, rgba(1, 76, 133, 1) 11%, rgba(0, 173, 155, 1) 63%, rgba(34, 224, 204, 1) 86%);
+    background: linear-gradient(90deg, rgba(1, 76, 133, 1) 11%, var(--secondary) 86%);
     margin: 0;
     grid-column: 1/4;
 }
@@ -52,7 +52,7 @@ body {
     background-color: var(--secondary);
     border: var(--secondaryDark) 0.15rem solid;
     border-radius: 1rem 0 0 1rem;
-    color: var(--primaryDark);
+    color: white;
     border-right: var(--secondaryDark) 0.05rem solid;
     padding: 1rem;
     margin: 0;
