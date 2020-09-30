@@ -181,6 +181,8 @@ function prevMonth() {
 }
 
 var citasAgendadasContainer = document.getElementById("citasAgendadasContainer")
+var camposLlenos = false
+var fechaSeleccionada = false
 
 function mostrarFechaSeleccionada(day) {
     actualDate = new Date(actualDate.getFullYear(), actualMonth, day)
@@ -189,6 +191,7 @@ function mostrarFechaSeleccionada(day) {
     calendar.style.display = "none"
     thPrev.style.visibility = "hidden"
     citasAgendadasContainer.style.display = "unset"
+    fechaSeleccionada = true
     mostrarHoras()
 }
 
@@ -198,38 +201,73 @@ function mostrarCalendario() {
     thPrev.style.visibility = "visible"
     horasNuevaCita.innerHTML = ""
     citasAgendadasContainer.style.display = "none"
+    fechaSeleccionada = false
 }
 
 var horasNuevaCita = document.getElementById("horasNuevaCita")
 var btnHoraSeleccionada = document.getElementById("btnHoraSeleccionada")
-var horaStr = ""
-var horaFloat = 0.0
+var horaFloat = 0
 
 function mostrarHoras() {
-    var concat = "<p>Selecciona una hora para la cita</p>"
+    var concat = "<p style='width:100%;'>Selecciona una hora para la cita *</p>"
     var horasDisponibles = 19
     for (let i = 8; i < horasDisponibles; i++) {
         if (i < 12) {
-            horaStr = i + ":00 AM"
-            horaFloat = i
+            concat += "<button style='margin-right: 0.5rem;' onclick='mostrarHoraSeleccionada(" + i + ")' class='boton wrapBoton'>" + i + ":00 AM</button>"
+            horaFloat = i + 0.5
+            concat += "<button style='margin-right: 0.5rem;' onclick='mostrarHoraSeleccionada(" + horaFloat + ")' class='boton wrapBoton'>" + i + ":30 AM</button>"
         } else if (i > 13) {
-            horaStr = i - 12 + ":00 PM"
-            horaFloat = i - 12
+            concat += "<button style='margin-right: 0.5rem;' onclick='mostrarHoraSeleccionada(" + i + ")' class='boton wrapBoton'>" + (i - 12) + ":00 PM</button>"
+            horaFloat = i - 12 + 0.5
+            concat += "<button style='margin-right: 0.5rem;' onclick='mostrarHoraSeleccionada(" + horaFloat + ")' class='boton wrapBoton'>" + (i - 12) + ":30 PM</button>"
         }
-        concat += "<button style='margin-right: 0.5rem;' onclick='mostrarHoraSeleccionada()' class='boton'>" + horaStr + "</button>"
     }
 
     horasNuevaCita.innerHTML = concat
-    horasNuevaCita.style.display = "initial"
+    horasNuevaCita.style.display = "flex"
     btnHoraSeleccionada.style.display = "none"
+    horaFloat = 0
 }
 
-function mostrarHoraSeleccionada() {
+function mostrarHoraSeleccionada(hora) {
+    horaFloat = hora
+    var horaInt = Math.trunc(hora)
+    var horaStr = ""
+    if (horaInt < 12) {
+        if (horaInt - hora != 0) {
+            horaStr += horaInt + ":30 AM"
+        } else {
+            horaStr += horaInt + ":00 AM"
+        }
+    } else if (horaInt > 12) {
+        horaInt -= 12
+        if (horaInt - (hora -= 12) != 0) {
+            horaStr += horaInt + ":30 AM"
+        } else {
+            horaStr += horaInt + ":00 AM"
+        }
+    }
+
+    console.log(horaStr)
     btnHoraSeleccionada.innerHTML = horaStr
     horasNuevaCita.style.display = "none"
     btnHoraSeleccionada.style.display = "inherit"
 }
 
+var nombreInput = document.getElementById("nombre")
+var numIdentificacionInput = document.getElementById("nId")
+var numTelefono1Input = document.getElementById("numTel1")
+var entidadSaludInput = document.getElementById("entidad")
+
+function camposValidos() {
+    if (!fechaSeleccionada || horaFloat == 0 || nombreInput.value == "" || numIdentificacionInput.value == "" ||
+        numTelefono1Input.value == "" || entidadSalud.value == "") {
+        return false
+    }
+    return true
+}
+
+//TODO: Agregar la verificación de los campos obligatorios
 /**
  * Esta función retorna un JSON con toda la información empaquetada relevante para una cita,
  * a continuación se listan todas las llaves y su tipo de dato, las que son obligatorias
@@ -245,28 +283,29 @@ function mostrarHoraSeleccionada() {
  * entidadSalud String
  */
 function obtenerInfoCita() {
-    var infoCita = { "fecha": actualDate, "hora": horaFloat }
-    var nombreInput = document.getElementById("nombre")
-    var numIdentificacionInput = document.getElementById("nId")
-    var numTelefono1Input = document.getElementById("numTel1")
-    var numTelefono2Input = document.getElementById("numTel2")
-    var documentosInput = document.getElementById("docs")
-    var copagoInput = document.getElementById("valorCopago")
-    var entidadSaludInput = document.getElementById("entidad")
-    infoCita.nombre = nombreInput.value
-    infoCita.numIdentificacion = numIdentificacionInput.value
-    infoCita.numTelefono1 = numTelefono1Input.value
-    infoCita.entidadSalud = entidadSaludInput.value
-    if (numTelefono2Input.value != "") {
-        infoCita.numTelefono2 = numTelefono2Input.value
+    if (camposValidos()) {
+        var infoCita = { "fecha": actualDate, "hora": horaFloat }
+        var numTelefono2Input = document.getElementById("numTel2")
+        var documentosInput = document.getElementById("docs")
+        var copagoInput = document.getElementById("valorCopago")
+        infoCita.nombre = nombreInput.value
+        infoCita.numIdentificacion = numIdentificacionInput.value
+        infoCita.numTelefono1 = numTelefono1Input.value
+        infoCita.entidadSalud = entidadSaludInput.value
+        if (numTelefono2Input.value != "") {
+            infoCita.numTelefono2 = numTelefono2Input.value
+        }
+        if (documentosInput.value != "") {
+            infoCita.documentos = documentosInput.value
+        }
+        if (copagoInput.value != "") {
+            infoCita.copago = copagoInput.value
+        }
+        return infoCita
+    } else {
+        alert("Por favor proporciona los campos obligatorios")
+        return null
     }
-    if (documentosInput.value != "") {
-        infoCita.documentos = documentosInput.value
-    }
-    if (copagoInput.value != "") {
-        infoCita.copago = copagoInput.value
-    }
-    return infoCita
 }
 
 function mostrarInfoCita() {
