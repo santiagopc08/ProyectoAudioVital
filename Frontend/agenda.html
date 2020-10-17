@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda de citas</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="resources/logo.png">
+</head>
+
+<body>
+    <div class="gridBody">
+        <!--Header-->
+        <div class="header">
+            <center>
+                <img class="header_logo" src="resources/logo_audio_digital.png" alt="logo_audio_digital">
+                <h1 style="letter-spacing: 3px; margin: 0%; padding: 0%; font-size: 0.6cm;">AUDIO VITAL</h1>
+            </center>
+        </div>
+        <div></div>
+        <div class="content">
+            <!-- Barra de menú -->
+            <div class="optBarContainer">
+                <a href="agenda.html" class="btnOptBarL optBar optBarSelected">
+                    <div>
+                        <img class="optBarIcon" src="resources/calendar.svg">
+                    </div>
+                    <div>
+                        <p class="optBarP">Agenda</p>
+                    </div>
+                </a>
+                <a href="pacientes.html" class="btnOptBarR optBar">
+                    <div>
+                        <p class="optBarP">Pacientes</p>
+                    </div>
+                    <div>
+                        <img class="optBarIcon" src="resources/user.svg">
+                    </div>
+                </a>
+            </div>
+            <!-- Contenedor de card -->
+            <div class="card">
+                <h2 class="subtitlePrimary">Ocupación en la agenda</h2>
+                <!-- Calendario -->
+                <center style="margin-top: 1rem;">
+                    <div>
+                        <button class="btn" id="btnFechaSeleccionadaVer" onclick='mostrarCalendario()'
+                            style="display: none;"></button>
+                        <div id="calendarVer">
+                            <caption>Selecciona una fecha para ver la ocupación</captionstyle=>
+                                <table cellspacing="0" class="calendarDiv">
+                                    <thead>
+                                        <tr class="trMonthYear">
+                                            <th colspan="1">
+                                                <img style="display: none;" id="thPrevVer" src="resources/prev.svg"
+                                                    alt="prev" class="calendarLoad" onclick="prevMonth()">
+                                            </th>
+                                            <th colspan="5" id="thMonthYearVer"></th>
+                                            <th colspan="1" id="thNextVer">
+                                                <img src="resources/next.svg" alt="next" class="calendarLoad"
+                                                    onclick="nextMonth()">
+                                            </th>
+                                        </tr>
+                                        <tr class="trWeekDays">
+                                            <th class="thWeekDay">Lu</th>
+                                            <th class="thWeekDay">Ma</th>
+                                            <th class="thWeekDay">Mi</th>
+                                            <th class="thWeekDay">Ju</th>
+                                            <th class="thWeekDay">Vi</th>
+                                            <th class="thWeekDay">Sa</th>
+                                            <th class="thWeekDay">Do</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="calendarBodyVer"></tbody>
+                                </table>
+                        </div>
+                    </div>
+                    <!-- CitasAgendadas -->
+                    <div id="citasAgendadasContainer" class="agenda" style="display: none;">
+                        <p style="flex: 0 1 100%; margin-bottom: 0;">Estas son las citas del día seleccionado</p>
+                        <div class="smallCard">
+                            <h4 class="subtitlePrimary">Cita clínica</h4>
+                            <p>8:00 AM - 9:00 AM</p>
+                            <details>
+                                <summary>Alberto Álvarez</summary>
+                                <p>11.538.594</p>
+                                <p style="margin-bottom: 0;">3004567894</p>
+                            </details>
+                        </div>
+                        <div class="smallCard">
+                            <h4 class="subtitleSecondary">Cita de reparaciones</h4>
+                            <p>8:00 AM - 8:30 AM</p>
+                            <details>
+                                <summary>Orlando Ortiz</summary>
+                                <p>11.538.594</p>
+                                <p style="margin-bottom: 0;">3004567894</p>
+                            </details>
+                        </div>
+                        <div class="smallCard">
+                            <h4 class="subtitleGray">Cita disponible</h4>
+                            <p>9:00 AM - 9:30 AM</p>
+                        </div>
+                    </div>
+                </center>
+            </div>
+        </div>
+        <div></div>
+    </div>
+    <script src="agenda.js"></script>
+</body>
+
+</html>

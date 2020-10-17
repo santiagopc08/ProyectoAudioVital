@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pacientes Audio vital</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="resources/logo.png">
+</head>
+
+<body>
+    <div class="gridBody">
+        <!--Header-->
+        <div class="header">
+            <center>
+                <img class="header_logo" src="resources/logo_audio_digital.png" alt="logo_audio_digital">
+                <h1 style="letter-spacing: 3px; margin: 0%; padding: 0%; font-size: 0.6cm;">AUDIO VITAL</h1>
+            </center>
+        </div>
+        <div></div>
+        <div class="content">
+            <!-- Barra de menú -->
+            <div class="optBarContainer">
+                <a href="agenda.html" class="btnOptBarL optBar">
+                    <div>
+                        <img class="optBarIcon" src="resources/calendar.svg">
+                    </div>
+                    <div>
+                        <p class="optBarP">Agenda</p>
+                    </div>
+                </a>
+                <a href="pacientes.html" class="btnOptBarR optBar optBarSelected">
+                    <div>
+                        <p class="optBarP">Pacientes</p>
+                    </div>
+                    <div>
+                        <img class="optBarIcon" src="resources/user.svg">
+                    </div>
+                </a>
+            </div>
+            <!-- Contenedor de card -->
+            <section id="search">
+                <div class="card">
+                    <h2 class="subtitlePrimary">Pacientes</h2>
+                    <div class="searchBar">
+                        <h3>Buscar paciente:</h3>
+                        <input type="text" id="nameSearch" />
+                        <img src="resources/search.svg" alt="search" />
+                    </div>
+                    <div class="searchResults">
+                        <P>Selecciona uno de los nombres para ver su perfil</P>
+                        <a class="internalLink" href="#perfil">
+                            <button>
+                                <p>Juan Alberto</p>
+                                <p>1001025389</p>
+                            </button>
+                        </a>
+                        <a class="internalLink" href="#perfil">
+                            <button>
+                                <p>Juan Alberto</p>
+                                <p>1001025389</p>
+                            </button>
+                        </a>
+                        <a class="internalLink" href="#perfil">
+                            <button>
+                                <p>Juan Alberto</p>
+                                <p>1001025389</p>
+                            </button>
+                        </a>
+                        <a class="internalLink" href="#perfil">
+                            <button>
+                                <p>Juan Alberto</p>
+                                <p>1001025389</p>
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </section>
+            <!-- Contenedor de perfil -->
+            <section id="perfil">
+                <div class="card">
+                    <h2 class="subtitlePrimary">Perfil del paciente</h2>
+                    <div class="perfilContainer">
+                        <div class="profileImgContainer">
+                            <img class="profileImg" src="resources/profile.svg" alt="profile">
+                        </div>
+                        <div class="perfilItem">
+                            <h4>Nombre</h4>
+                            <p>Juan Alberto</p>
+                        </div>
+                        <div class="perfilItem">
+                            <h4>Número de identificación</h4>
+                            <p>11257748</p>
+                        </div>
+                        <div class="perfilItem">
+                            <h4>Cantidad de controles</h4>
+                            <p>5</p>
+                        </div>
+                        <div class="perfilItem">
+                            <details>
+                                <summary>Números de teléfono</summary>
+                                <p>3013147894</p>
+                            </details>
+                        </div>
+                        <div class="perfilItem smlCard">
+                            <h4 class="subtitleSecondary">Observaciones</h4>
+                            <p>Patología 1</p>
+                            <p>Medicaento 1</p>
+                            <p>Medicaento 2</p>
+                            <div class="inputContainer">
+                                <input class="mInput" type="text" name="observaciones" placeholder="Observación">
+                                <label for="observaciones" class="mLabel lblSecondary">Observación</label>
+                                <div class="d1"></div>
+                                <div class="d2 dSecondary"></div>
+                                <button class="btnSecondary">Agregar</button>
+                            </div>
+                        </div>
+                        <div class="perfilItem smlCard">
+                            <h4 class="subtitleSecondary">Asignar cita</h4>
+                            <div class="smlCardDiv">
+                                <button class="btn">Clínica</button>
+                            </div>
+                            <div class="smlCardDiv">
+                                <button class="btnSecondary">de reparaciones</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Formulario citas clínicas -->
+            <div class="">
+                <div class="center">
+                    <button onclick="openLoginForm()">Login</button>
+                </div>
+                <div class="popup-overlay"></div>
+                <div class="popup">
+                    <div class="popup-close" onclick="closeLoginForm()">&times;</div>
+                    <div class="form">
+                        <div class="subtitlePrimary">
+                            Cita clínica
+                        </div>
+                        <div class="profileImgContainer">
+                            <img src="resources/agenda.svg" alt="">
+                        </div>
+                        <div class="element">
+                            <label for="username">Username</label>
+                            <input type="text" id="username">
+                        </div>
+                        <div class="element">
+                            <label for="password">Password</label>
+                            <input type="password" id="password">
+                        </div>
+                        <div class="element">
+                            <button>Login</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div></div>
+    </div>
+    <script src="pacientes.js"></script>
+</body>
+
+</html>
