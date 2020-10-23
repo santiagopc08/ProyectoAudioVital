@@ -80,6 +80,7 @@
             <!-- Contenedor de perfil -->
             <section id="perfil">
                 <div class="card">
+
                     <h2 class="subtitlePrimary">Perfil del paciente</h2>
                     <div class="perfilContainer">
                         <div class="profileImgContainer">
@@ -106,8 +107,8 @@
                         <div class="perfilItem smlCard">
                             <h4 class="subtitleSecondary">Observaciones</h4>
                             <p>Patología 1</p>
-                            <p>Medicaento 1</p>
-                            <p>Medicaento 2</p>
+                            <p>Medicamento 1</p>
+                            <p>Medicamento 2</p>
                             <div class="inputContainer">
                                 <input class="mInput" type="text" name="observaciones" placeholder="Observación">
                                 <label for="observaciones" class="mLabel lblSecondary">Observación</label>
@@ -118,48 +119,169 @@
                         </div>
                         <div class="perfilItem smlCard">
                             <h4 class="subtitleSecondary">Asignar cita</h4>
-                            <div class="smlCardDiv">
-                                <button class="btn">Clínica</button>
+                            <div style="display: grid; place-items: center; width: 100%;">
+                                <button class="btn" id="btnFechaSeleccionada" onclick='mostrarCalendario()'
+                                    style="display: none;"></button>
+                                <div id="calendarVer" style="display: grid; place-items: center; width: 100%;">
+                                    <caption>Selecciona una fecha para la cita</captionstyle=>
+                                        <table cellspacing="0" class="calendarDiv">
+                                            <thead>
+                                                <tr class="trMonthYear">
+                                                    <th colspan="1">
+                                                        <img style="display: none;" id="thPrevVer"
+                                                            src="resources/prev.svg" alt="prev" class="calendarLoad"
+                                                            onclick="prevMonth()">
+                                                    </th>
+                                                    <th colspan="5" id="thMonthYearVer"></th>
+                                                    <th colspan="1" id="thNextVer">
+                                                        <img src="resources/next.svg" alt="next" class="calendarLoad"
+                                                            onclick="nextMonth()">
+                                                    </th>
+                                                </tr>
+                                                <tr class="trWeekDays">
+                                                    <th class="thWeekDay">Lu</th>
+                                                    <th class="thWeekDay">Ma</th>
+                                                    <th class="thWeekDay">Mi</th>
+                                                    <th class="thWeekDay">Ju</th>
+                                                    <th class="thWeekDay">Vi</th>
+                                                    <th class="thWeekDay">Sa</th>
+                                                    <th class="thWeekDay">Do</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="calendarBodyVer"></tbody>
+                                        </table>
+                                </div>
                             </div>
-                            <div class="smlCardDiv">
-                                <button class="btnSecondary">de reparaciones</button>
+                            <div id="btnCitasContainer">
+                                <div class="smlCardDiv">
+                                    <button class="btn" onclick="openCitasClinicas()">Clínica</button>
+                                </div>
+                                <div class="smlCardDiv">
+                                    <button class="btnSecondary" onclick="openReps()">de reparaciones</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
+            <div class="popup-overlay"></div>
             <!-- Formulario citas clínicas -->
-            <div class="">
-                <div class="center">
-                    <button onclick="openLoginForm()">Login</button>
-                </div>
-                <div class="popup-overlay"></div>
-                <div class="popup">
-                    <div class="popup-close" onclick="closeLoginForm()">&times;</div>
-                    <div class="form">
-                        <div class="subtitlePrimary">
-                            Cita clínica
+            <div class="popup">
+                <div class="popup-close" onclick="closeCitasClinicas()">&times;</div>
+                <div class="form">
+                    <div class="subtitlePrimary">
+                        Cita clínica
+                    </div>
+                    <div class="popupImg">
+                        <img src="resources/agenda.svg" alt="">
+                    </div>
+                    <!-- Lista de horarios disponibles -->
+                    <div id="horasClinContainer" style="padding: 1rem 0 0;">
+                        <button class="btn" id="btnHorasClin" onclick='mostrarHorasClin()'
+                            style="display: none; margin: 0 auto;"></button>
+                        <div class="searchResults" id="horasClin"></div>
+                    </div>
+                    <div class="textareaContainer">
+                        <label class="mTextareaLbl">Documentos requeridos</label>
+                        <textarea id="docs" class="mTextarea"></textarea>
+                    </div>
+                    <div style="width: 90%; margin: 0.5rem auto 0; display: grid; grid-template-columns: 1fr 1fr;">
+                        <div id="chkCopagoContainer">
+                            <label class="container">¿Necesita copago?
+                                <input type="checkbox" id="chkCopago" onclick="habilitarValorCopago()">
+                                <span class="checkmark"></span>
+                            </label>
                         </div>
-                        <div class="profileImgContainer">
-                            <img src="resources/agenda.svg" alt="">
-                        </div>
-                        <div class="element">
-                            <label for="username">Username</label>
-                            <input type="text" id="username">
-                        </div>
-                        <div class="element">
-                            <label for="password">Password</label>
-                            <input type="password" id="password">
-                        </div>
-                        <div class="element">
-                            <button>Login</button>
+                        <div class="inputContainer" id="valorCopagoContainer">
+                            <input id="valorCopago" class="mInput" type="number" name="valorCopago"
+                                placeholder="Valor del copago *">
+                            <label for="valorCopago" class="mLabel lblPrimary">Valor del copago *</label>
+                            <div class="d1"></div>
+                            <div class="d2 dPrimary"></div>
                         </div>
                     </div>
+                    <div class="inputContainer">
+                        <input id="entidad" name="entidad" class="mInput" type="text" placeholder="Entidad de salud *">
+                        <label for="entidad" class="mLabel lblPrimary">Entidad de salud *</label>
+                        <div class="d1"></div>
+                        <div class="d2 dPrimary"></div>
+                    </div>
+                    <button style="margin-top: 0.5rem;" class="btn">Agendar</button>
                 </div>
+                <br>
             </div>
+            <!-- Formulario citas de reparaciones -->
+            <div class="popupReps">
+                <div class="popup-close" onclick="closeReps()">&times;</div>
+                <div class="form">
+                    <div class="subtitleSecondary">
+                        Cita de reparaciones
+                    </div>
+                    <div class="popupImg">
+                        <img src="resources/agenda.svg" alt="">
+                    </div>
+                    <!-- Lista de horarios disponibles -->
+                    <div id="horasRepsContainer" style="padding: 1rem 0 0;">
+                        <button class="btnSecondary" id="btnHorasReps" onclick='mostrarHorasReps()'
+                            style="display: none; margin: 0 auto;"></button>
+                        <div class="searchResults" id="horasReps"></div>
+                    </div>
+                    <div class="inputContainer">
+                        <input id="newRepsObs" name="newRepsObs" class="mInput" type="text"
+                            placeholder="Observaciones *">
+                        <label for="newRepsObs" class="mLabel lblSecondary">Observaciones *</label>
+                        <div class="d1"></div>
+                        <div class="d2 dSecondary"></div>
+                    </div>
+                    <button style="margin-top: 0.5rem;" class="btnSecondary">Agendar</button>
+                </div>
+                <br>
+            </div>
+            <!-- Formulario registro usuario -->
+            <section id="nuevo_usuario">
+                <div class="card">
+                    <h2 class="subtitlePrimary">Registrar paciente</h2>
+                    <div class="perfilContainer">
+                        <div class="profileImgContainer">
+                            <img class="profileImg" src="resources/profile.svg" alt="profile">
+                        </div>
+                        <div class="inputContainer perfilItem">
+                            <input id="newPatientNombre" class="mInput" type="text" name="newPatientNombre"
+                                placeholder="Nombre completo *">
+                            <label for="newPatientNombre" class="mLabel lblSecondary">Nombre completo *</label>
+                            <div class="d1"></div>
+                            <div class="d2 dSecondary"></div>
+                        </div>
+                        <div class="inputContainer perfilItem">
+                            <input id="newPatientId" class="mInput" type="number" name="newPatientId"
+                                placeholder="Número de identificación *">
+                            <label for="newPatientId" class="mLabel lblSecondary">Número de identificación *</label>
+                            <div class="d1"></div>
+                            <div class="d2 dSecondary"></div>
+                        </div>
+                        <div class="inputContainer perfilItem">
+                            <input id="newPatientPhone" class="mInput" type="number" name="newPatientPhone"
+                                placeholder="Número de teléfono *">
+                            <label for="newPatientPhone" class="mLabel lblSecondary">Número de teléfono *</label>
+                            <div class="d1"></div>
+                            <div class="d2 dSecondary"></div>
+                        </div>
+                        <div class="inputContainer perfilItem">
+                            <input id="newPatientObs" class="mInput" type="text" name="newPatientObs"
+                                placeholder="Observaciones *">
+                            <label for="newPatientObs" class="mLabel lblSecondary">Observaciones *</label>
+                            <div class="d1"></div>
+                            <div class="d2 dSecondary"></div>
+                        </div>
+                        <button style="margin: 1rem auto 0;" class="btnSecondary">Registrar</button>
+                    </div>
+                </div>
+            </section>
         </div>
-        <div></div>
     </div>
+    <div></div>
+    </div>
+    <script src="calendar.js"></script>
     <script src="pacientes.js"></script>
 </body>
 
