@@ -2,10 +2,10 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const Paciente = new Schema(
     {
-        _id: Number,
+        _id: String,
         nombre: String,
-        celular: Number,
-        celularOpcional: Number
+        telefono: String,
+        observaciones: String
     },
     {
         collection: 'paciente',

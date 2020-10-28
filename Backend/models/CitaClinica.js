@@ -1,17 +1,17 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-const Cita = new Schema({
-    cedula: Number,
+const CitaClinica = new Schema({
+    cedula: String,
     fecha: String,
     hora: String,
     documentos: String,
-    copago: Boolean,
     valorCopago: Number,
     entidadSalud: String,
-    estado: Number
+    duracion: Number,
+    //estado: Number
 }, {
-    collection: 'cita',
+    collection: 'cita_clinica',
     toJSON: { virtuals: true }
 })
 
-module.exports = mongoose.model('Cita', Cita)
+module.exports = mongoose.model('CitaClinica', CitaClinica)
