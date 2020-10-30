@@ -40,22 +40,73 @@
                 </a>
             </div>
             <!-- Contenedor de card -->
-            <section id="search">
-                <div class="card">
-                    <h2 class="subtitlePrimary">Pacientes</h2>
-                    <div class="searchBar">
-                        <h3>Buscar paciente:</h3>
-                        <input type="text" id="nameSearch" />
-                        <img onclick="buscar()" src="resources/search.svg" alt="search" />
+            <div style="display: grid; grid-template-columns: 1fr 1fr;">
+                <!-- Formulario registro usuario -->
+                <section id="nuevo_usuario">
+                    <div class="card">
+                        <h2 class="subtitlePrimary">Registrar paciente</h2>
+                        <div class="perfilContainer">
+                            <div class="profileImgContainer">
+                                <img class="profileImg" src="resources/profile.svg" alt="profile">
+                            </div>
+                            <div class="inputContainer perfilItem">
+                                <input id="newPatientName" class="mInput" type="text" name="newPatientNombre"
+                                    placeholder="Nombre completo *">
+                                <label for="newPatientName" class="mLabel lblSecondary">Nombre completo *</label>
+                                <div class="d1"></div>
+                                <div class="d2 dSecondary"></div>
+                            </div>
+                            <div class="inputContainer perfilItem">
+                                <input id="newPatientId" class="mInput" type="number" name="newPatientId"
+                                    placeholder="Número de identificación *">
+                                <label for="newPatientId" class="mLabel lblSecondary">Número de identificación *</label>
+                                <div class="d1"></div>
+                                <div class="d2 dSecondary"></div>
+                            </div>
+                            <div class="inputContainer perfilItem">
+                                <input id="newPatientPhone" class="mInput" type="number" name="newPatientPhone"
+                                    placeholder="Número de teléfono *">
+                                <label for="newPatientPhone" class="mLabel lblSecondary">Número de teléfono *</label>
+                                <div class="d1"></div>
+                                <div class="d2 dSecondary"></div>
+                            </div>
+                            <div class="inputContainer perfilItem">
+                                <input id="newPatientObs" class="mInput" type="text" name="newPatientObs"
+                                    placeholder="Observaciones">
+                                <label for="newPatientObs" class="mLabel lblSecondary">Observaciones</label>
+                                <div class="d1"></div>
+                                <div class="d2 dSecondary"></div>
+                            </div>
+                            <span style="margin: 1rem 0 0; width: 100%;">
+                                <button onclick="validateRegFields()" class="btnSecondary">Registrar</button></span>
+                        </div>
                     </div>
-                    <div id="searchResultsContainer" class="searchResults">
+                </section>
+                <section id="search">
+                    <div class="card" style="height: 93%;">
+                        <h2 class="subtitlePrimary">Pacientes</h2>
+                        <div class="searchBar">
+                            <h3>Buscar paciente:</h3>
+                            <input type="text" id="nameSearch" />
+                            <img onclick="buscar()" src="resources/search.svg" alt="search" />
+                        </div>
+                        <div id="searchResultsContainer" class="searchResults">
+                            <div id="nothingFound" style="padding: 0 1rem;">
+                                <img style="width: 60%; height: auto; margin-top: 1rem;" src="resources/confuso.svg"
+                                    alt="nada">
+                                <p style="color: #002558;">No se encontró nada, prueba buscar o registrar un paciente.
+                                </p>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            </div>
             <!-- Contenedor de perfil -->
             <section id="perfil">
                 <div class="card">
-                    <h2 class="subtitlePrimary">Perfil del paciente</h2>
+                    <h2 class="subtitlePrimary">
+                        <img class="subtitleAction" onclick="showSearchRegister()" src="resources/arrow.svg" alt="back">
+                        Perfil del paciente</h2>
                     <div class="perfilContainer">
                         <div class="profileImgContainer">
                             <img class="profileImg" src="resources/profile.svg" alt="profile">
@@ -177,7 +228,7 @@
                         <div class="d1"></div>
                         <div class="d2 dPrimary"></div>
                     </div>
-                    <button style="margin-top: 0.5rem;" class="btn">Agendar</button>
+                    <button onclick="agendarClin()" style="margin-top: 0.5rem;" class="btn">Agendar</button>
                 </div>
                 <br>
             </div>
@@ -204,51 +255,10 @@
                         <div class="d1"></div>
                         <div class="d2 dSecondary"></div>
                     </div>
-                    <button style="margin-top: 0.5rem;" class="btnSecondary">Agendar</button>
+                    <button onclick="agendarReps()" style="margin-top: 0.5rem;" class="btnSecondary">Agendar</button>
                 </div>
                 <br>
             </div>
-            <!-- Formulario registro usuario -->
-            <section id="nuevo_usuario">
-                <div class="card">
-                    <h2 class="subtitlePrimary">Registrar paciente</h2>
-                    <div class="perfilContainer">
-                        <div class="profileImgContainer">
-                            <img class="profileImg" src="resources/profile.svg" alt="profile">
-                        </div>
-                        <div class="inputContainer perfilItem">
-                            <input id="newPatientName" class="mInput" type="text" name="newPatientNombre"
-                                placeholder="Nombre completo *">
-                            <label for="newPatientName" class="mLabel lblSecondary">Nombre completo *</label>
-                            <div class="d1"></div>
-                            <div class="d2 dSecondary"></div>
-                        </div>
-                        <div class="inputContainer perfilItem">
-                            <input id="newPatientId" class="mInput" type="number" name="newPatientId"
-                                placeholder="Número de identificación *">
-                            <label for="newPatientId" class="mLabel lblSecondary">Número de identificación *</label>
-                            <div class="d1"></div>
-                            <div class="d2 dSecondary"></div>
-                        </div>
-                        <div class="inputContainer perfilItem">
-                            <input id="newPatientPhone" class="mInput" type="number" name="newPatientPhone"
-                                placeholder="Número de teléfono *">
-                            <label for="newPatientPhone" class="mLabel lblSecondary">Número de teléfono *</label>
-                            <div class="d1"></div>
-                            <div class="d2 dSecondary"></div>
-                        </div>
-                        <div class="inputContainer perfilItem">
-                            <input id="newPatientObs" class="mInput" type="text" name="newPatientObs"
-                                placeholder="Observaciones">
-                            <label for="newPatientObs" class="mLabel lblSecondary">Observaciones</label>
-                            <div class="d1"></div>
-                            <div class="d2 dSecondary"></div>
-                        </div>
-                        <button onclick="validateRegFields()" style="margin: 1rem auto 0;"
-                            class="btnSecondary">Registrar</button>
-                    </div>
-                </div>
-            </section>
         </div>
     </div>
     <div></div>

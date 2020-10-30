@@ -1,6 +1,11 @@
-var btnFechaSeleccionada = document.getElementById("btnFechaSeleccionada");
-var btnCitasContainer = document.getElementById("btnCitasContainer");
+var btnFechaSeleccionada = document.getElementById("btnFechaSeleccionada"),
+	btnCitasContainer = document.getElementById("btnCitasContainer");
 
+var sectionBuscar = document.getElementById("search"),
+	sectionRegistrar = document.getElementById("nuevo_usuario"),
+	sectionPerfil = document.getElementById("perfil");
+
+// On select date
 function mostrarCitas() {
 	btnCitasContainer.style.transform = "scaleX(1)";
 	btnCitasContainer.style.opacity = "1";
@@ -16,10 +21,10 @@ function ocultarCitas() {
 	window.scrollTo(0, 2000);
 }
 
+// On select type of appoinment
 function openCitasClinicas() {
 	document.body.classList.add("showCitasClinicas");
 	getHoursClin();
-	mostrarHorasClin();
 }
 function closeCitasClinicas() {
 	document.body.classList.remove("showCitasClinicas");
@@ -27,12 +32,13 @@ function closeCitasClinicas() {
 
 function openReps() {
 	document.body.classList.add("showReparaciones");
-	mostrarHorasReps();
+	getHoursReps();
 }
 function closeReps() {
 	document.body.classList.remove("showReparaciones");
 }
 
+// For checbox in clinic appoinment
 var chkCopago = document.getElementById("chkCopago");
 var valorCopago = document.getElementById("valorCopago");
 
@@ -47,139 +53,123 @@ function habilitarValorCopago() {
 
 var horasNuevaCita;
 var btnHoraSeleccionada;
-var horaFloat = 0;
+
+//				Mostrar disponibilidad horaria de citas de reparaciones				//
+var occHoursReps = [];
+function getHoursReps() {
+	fetch(
+		"http://localhost:3001/api/v1/cita-reparaciones/" +
+			actualDate.getDate() +
+			"-" +
+			(actualMonth + 1) +
+			"-" +
+			actualDate.getFullYear()
+	)
+		.then((res) => res.json())
+		.then((datos) => {
+			occHoursReps = datos.horas;
+			mostrarHorasReps();
+		});
+}
 
 function mostrarHorasReps() {
+	var horasDisponibles = [8, 9, 10, 11, 2, 3, 4, 5, 6];
 	horasNuevaCita = document.getElementById("horasReps");
 	btnHoraSeleccionada = document.getElementById("btnHorasReps");
 	var concat = "<p style='width:100%;'>Selecciona una hora para la cita *</p>";
-	var horasDisponibles = 19;
-	for (let i = 8; i < horasDisponibles; i++) {
-		if (i < 12) {
+	for (let i = 0; i < occHoursReps.length; i++) {
+		for (let j = 0; j < horasDisponibles.length; j++) {
+			if (horasDisponibles[j] == parseInt(occHoursReps[i])) {
+				horasDisponibles.splice(j, 1);
+			}
+		}
+	}
+	for (let i = 0; i < horasDisponibles.length; i++) {
+		if (horasDisponibles[i] > 8) {
 			concat +=
-				"<button onclick='mostrarHoraSelReps(" +
-				i +
+				"<button onclick='mostrarHoraSel(" +
+				horasDisponibles[i] +
 				")' class='btnSecondary wrapBoton'>" +
-				i +
+				horasDisponibles[i] +
 				":00 AM</button>";
-			horaFloat = i + 0.5;
+		} else {
 			concat +=
-				"<button onclick='mostrarHoraSelReps(" +
-				horaFloat +
+				"<button onclick='mostrarHoraSel(" +
+				horasDisponibles[i] +
 				")' class='btnSecondary wrapBoton'>" +
-				i +
-				":30 AM</button>";
-		} else if (i > 13) {
-			concat +=
-				"<button onclick='mostrarHoraSelReps(" +
-				i +
-				")' class='btnSecondary wrapBoton'>" +
-				(i - 12) +
+				horasDisponibles[i] +
 				":00 PM</button>";
-			horaFloat = i - 12 + 0.5;
-			concat +=
-				"<button onclick='mostrarHoraSelReps(" +
-				horaFloat +
-				")' class='btnSecondary wrapBoton'>" +
-				(i - 12) +
-				":30 PM</button>";
 		}
 	}
 
 	horasNuevaCita.innerHTML = concat;
 	horasNuevaCita.style.display = "flex";
 	btnHoraSeleccionada.style.display = "none";
-	horaFloat = 0;
 }
 
-function mostrarHoraSelReps(hora) {
-	horaFloat = hora;
-	var horaInt = Math.trunc(hora);
-	var horaStr = "";
-	if (horaInt < 12) {
-		if (horaInt - hora != 0) {
-			horaStr += horaInt + ":30 AM";
-		} else {
-			horaStr += horaInt + ":00 AM";
-		}
-	} else if (horaInt > 12) {
-		horaInt -= 12;
-		if (horaInt - (hora -= 12) != 0) {
-			horaStr += horaInt + ":30 AM";
-		} else {
-			horaStr += horaInt + ":00 AM";
-		}
-	}
-
-	console.log(horaStr);
-	btnHoraSeleccionada.innerHTML = horaStr;
-	horasNuevaCita.style.display = "none";
-	btnHoraSeleccionada.style.display = "inherit";
+//				Mostrar disponibilidad horaria de citas clínicas				//
+var occHoursClin = [];
+function getHoursClin() {
+	fetch(
+		"http://localhost:3001/api/v1/cita-clinica/" +
+			actualDate.getDate() +
+			"-" +
+			(actualMonth + 1) +
+			"-" +
+			actualDate.getFullYear()
+	)
+		.then((res) => res.json())
+		.then((datos) => {
+			occHoursClin = datos.horas;
+			mostrarHorasClin();
+		});
 }
 
 function mostrarHorasClin() {
+	var horasDisponibles = [8, 9, 10, 11, 2, 3, 4, 5, 6];
 	horasNuevaCita = document.getElementById("horasClin");
 	btnHoraSeleccionada = document.getElementById("btnHorasClin");
 	var concat = "<p style='width:100%;'>Selecciona una hora para la cita *</p>";
-	var horasDisponibles = 19;
-	for (let i = 8; i < horasDisponibles; i++) {
-		if (i < 12) {
+	for (let i = 0; i < occHoursClin.length; i++) {
+		for (let j = 0; j < horasDisponibles.length; j++) {
+			if (horasDisponibles[j] == parseInt(occHoursClin[i])) {
+				horasDisponibles.splice(j, 1);
+			}
+		}
+	}
+	for (let i = 0; i < horasDisponibles.length; i++) {
+		if (horasDisponibles[i] > 8) {
 			concat +=
-				"<button onclick='mostrarHoraSelClin(" +
-				i +
+				"<button onclick='mostrarHoraSel(" +
+				horasDisponibles[i] +
 				")' class='btn wrapBoton'>" +
-				i +
+				horasDisponibles[i] +
 				":00 AM</button>";
-			horaFloat = i + 0.5;
+		} else {
 			concat +=
-				"<button onclick='mostrarHoraSelClin(" +
-				horaFloat +
+				"<button onclick='mostrarHoraSel(" +
+				horasDisponibles[i] +
 				")' class='btn wrapBoton'>" +
-				i +
-				":30 AM</button>";
-		} else if (i > 13) {
-			concat +=
-				"<button onclick='mostrarHoraSelClin(" +
-				i +
-				")' class='btn wrapBoton'>" +
-				(i - 12) +
+				horasDisponibles[i] +
 				":00 PM</button>";
-			horaFloat = i - 12 + 0.5;
-			concat +=
-				"<button onclick='mostrarHoraSelClin(" +
-				horaFloat +
-				")' class='btn wrapBoton'>" +
-				(i - 12) +
-				":30 PM</button>";
 		}
 	}
 
 	horasNuevaCita.innerHTML = concat;
 	horasNuevaCita.style.display = "flex";
 	btnHoraSeleccionada.style.display = "none";
-	horaFloat = 0;
 }
 
-function mostrarHoraSelClin(hora) {
-	horaFloat = hora;
-	var horaInt = Math.trunc(hora);
-	var horaStr = "";
-	if (horaInt < 12) {
-		if (horaInt - hora != 0) {
-			horaStr += horaInt + ":30 AM";
-		} else {
-			horaStr += horaInt + ":00 AM";
-		}
-	} else if (horaInt > 12) {
-		horaInt -= 12;
-		if (horaInt - (hora -= 12) != 0) {
-			horaStr += horaInt + ":30 AM";
-		} else {
-			horaStr += horaInt + ":00 AM";
-		}
-	}
+var horaSel = 0;
 
-	console.log(horaStr);
+function mostrarHoraSel(hora) {
+	var horaStr = "";
+	if (hora > 8) {
+		horaStr += hora + ":00 AM";
+	} else {
+		horaStr += hora + ":00 PM";
+	}
+	horaSel = hora;
 	btnHoraSeleccionada.innerHTML = horaStr;
 	horasNuevaCita.style.display = "none";
 	btnHoraSeleccionada.style.display = "inherit";
@@ -265,6 +255,14 @@ function buscar() {
 				if (datos.length > 0) {
 					resultsContainer.innerHTML +=
 						"<P>Selecciona uno de los nombres para ver su perfil</P>";
+				} else {
+					resultsContainer.innerHTML = `
+					<div id="nothingFound" style="padding: 0 1rem;">
+						<img style="width: 60%; height: auto; margin-top: 1rem;" src="resources/confuso.svg"
+							alt="nada">
+						<p style="color: #002558;">No se encontró nada, prueba buscar o registrar un paciente.
+						</p>
+					</div>`;
 				}
 				for (var i = 0; i < datos.length; i++) {
 					resultsContainer.innerHTML += `<a class="internalLink" onclick="mostrarPerfil(${i})">
@@ -289,6 +287,9 @@ var profileName = document.getElementById("profileName"),
 	profileIndex = 0;
 function mostrarPerfil(index) {
 	profileIndex = index;
+	sectionRegistrar.style.display = "none";
+	sectionBuscar.style.display = "none";
+	sectionPerfil.style.display = "block";
 	profileName.innerHTML = resultsArray[index].nombre;
 	profileId.innerHTML = resultsArray[index]._id;
 	profilePhone.innerHTML = resultsArray[index].telefono;
@@ -331,6 +332,88 @@ function updateObs() {
 	}
 }
 
-//				Mostrar disponibilidad horaria de citas clínicas				//
+//				Agendar cita clínica				//
 
-function getHoursClin() {}
+var docs = document.getElementById("docs"),
+	entidad = document.getElementById("entidad");
+function agendarClin() {
+	let docsStr = docs.value,
+		valorCopagoStr = chkCopago.checked ? valorCopago.value : "0",
+		entidadStr = entidad.value;
+	if (entidadStr != "") {
+		let jsonString = {
+			cedula: resultsArray[profileIndex]._id,
+			fecha:
+				actualDate.getDate() +
+				"-" +
+				(actualMonth + 1) +
+				"-" +
+				actualDate.getFullYear(),
+			hora: horaSel,
+			documentos: docsStr,
+			valorCopago: valorCopagoStr,
+			entidadSalud: entidadStr,
+		};
+		fetch("http://localhost:3001/api/v1/cita-clinica/", {
+			method: "POST",
+			body: JSON.stringify(jsonString),
+			headers: {
+				Accepts: "application/json",
+				"Content-type": "application/json",
+			},
+		})
+			.then((res) => res.json())
+			.then((info) => {
+				console.log(info);
+				alert("Se agendó correctamente la cita.");
+				closeCitasClinicas();
+				docs.value = "";
+				entidad.value = "";
+			});
+	} else {
+		alert("Por favor indica la entidad de salud.");
+	}
+}
+
+//				Agendar cita de reparaciones				//
+
+var newRepsObs = document.getElementById("newRepsObs");
+function agendarReps() {
+	let newRepsObsStr = newRepsObs.value;
+	if (newRepsObsStr != "") {
+		let jsonString = {
+			cedula: resultsArray[profileIndex]._id,
+			fecha:
+				actualDate.getDate() +
+				"-" +
+				(actualMonth + 1) +
+				"-" +
+				actualDate.getFullYear(),
+			hora: horaSel,
+			observaciones: newRepsObsStr,
+		};
+		fetch("http://localhost:3001/api/v1/cita-reparaciones/", {
+			method: "POST",
+			body: JSON.stringify(jsonString),
+			headers: {
+				Accepts: "application/json",
+				"Content-type": "application/json",
+			},
+		})
+			.then((res) => res.json())
+			.then((info) => {
+				console.log(info);
+				alert("Se agendó correctamente la cita.");
+				closeReps();
+				newRepsObs.value = "";
+			});
+	} else {
+		alert("Por favor indica las observaciones de la reparación.");
+	}
+}
+
+function showSearchRegister() {
+	sectionRegistrar.style.display = "block";
+	sectionBuscar.style.display = "block";
+	sectionPerfil.style.display = "none";
+}
