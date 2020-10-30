@@ -18,6 +18,7 @@ function ocultarCitas() {
 
 function openCitasClinicas() {
 	document.body.classList.add("showCitasClinicas");
+	getHoursClin();
 	mostrarHorasClin();
 }
 function closeCitasClinicas() {
@@ -183,3 +184,153 @@ function mostrarHoraSelClin(hora) {
 	horasNuevaCita.style.display = "none";
 	btnHoraSeleccionada.style.display = "inherit";
 }
+
+//				Registrar un nuevo paciente				//
+var newPatientName = document.getElementById("newPatientName"),
+	newPatientId = document.getElementById("newPatientId"),
+	newPatientPhone = document.getElementById("newPatientPhone"),
+	newPatientObs = document.getElementById("newPatientObs");
+
+function registrar(datos) {
+	fetch("http://localhost:3001/api/v1/paciente", {
+		method: "POST",
+		body: JSON.stringify(datos),
+		headers: {
+			Accepts: "application/json",
+			"Content-type": "application/json",
+		},
+	})
+		.then((res) => res.json())
+		.then((data) => {
+			console.log(data);
+			emptyRegistryFields();
+			alert("Se guardó correctamente el usuario.");
+		})
+		.catch((err) => console.log(err));
+}
+
+function emptyRegistryFields() {
+	newPatientName.value = "";
+	newPatientId.value = "";
+	newPatientPhone.value = "";
+	newPatientObs.value = "";
+}
+
+function validateRegFields() {
+	if (isNaN(newPatientPhone.value)) {
+		alert("Debes ingresar un número telefónico válido").show();
+		return;
+	} else if (
+		newPatientName.value == "" ||
+		newPatientId.value == "" ||
+		newPatientPhone.value == ""
+	) {
+		alert("Indica los campos necesarios por favor");
+		return;
+	} else {
+		let nombre = newPatientName.value,
+			_id = parseInt(newPatientId.value),
+			telefono = parseInt(newPatientPhone.value),
+			observaciones = newPatientObs.value;
+		let info = {
+			_id,
+			nombre,
+			telefono,
+			observaciones,
+		};
+		if (observaciones == "") {
+			info = {
+				_id,
+				nombre,
+				telefono,
+			};
+		}
+		registrar(info);
+	}
+}
+
+//				Buscar un paciente por nombre				//
+var nombre = "",
+	resultsContainer = document.getElementById("searchResultsContainer"),
+	nameSearchField = document.getElementById("nameSearch"),
+	resultsArray = [];
+function buscar() {
+	nombre = nameSearchField.value;
+	if (nombre != "") {
+		resultsContainer.innerHTML = "";
+		fetch("http://localhost:3001/api/v1/paciente/nombre/" + nombre)
+			.then((res) => res.json())
+			.then((datos) => {
+				resultsArray = datos;
+				if (datos.length > 0) {
+					resultsContainer.innerHTML +=
+						"<P>Selecciona uno de los nombres para ver su perfil</P>";
+				}
+				for (var i = 0; i < datos.length; i++) {
+					resultsContainer.innerHTML += `<a class="internalLink" onclick="mostrarPerfil(${i})">
+					<button>
+						<p>${datos[i].nombre}</p>
+						<p>${datos[i]._id}</p>
+					</button>
+				</a>`;
+				}
+			});
+	} else {
+		alert("Por favor indica algo para buscar.");
+	}
+}
+
+//				Mostrar perfil de un paciente				//
+var profileName = document.getElementById("profileName"),
+	profileId = document.getElementById("profileId"),
+	profileControlsQ = document.getElementById("profileControlsQ"),
+	profilePhone = document.getElementById("profilePhone"),
+	profileObs = document.getElementById("profileObs"),
+	profileIndex = 0;
+function mostrarPerfil(index) {
+	profileIndex = index;
+	profileName.innerHTML = resultsArray[index].nombre;
+	profileId.innerHTML = resultsArray[index]._id;
+	profilePhone.innerHTML = resultsArray[index].telefono;
+	profileObs.innerHTML = resultsArray[index].observaciones;
+	fetch(
+		"http://localhost:3001/api/v1/paciente/controles/" + resultsArray[index]._id
+	)
+		.then((res) => res.json())
+		.then((info) => {
+			profileControlsQ.innerHTML = info.controles;
+		});
+}
+
+//				Actualizar observaciones				//
+
+var profileObsField = document.getElementById("profileObsField");
+function updateObs() {
+	let obs = profileObsField.value;
+	if (obs != "") {
+		let jsonString = {
+			cedula: resultsArray[profileIndex]._id,
+			observaciones: obs,
+		};
+		fetch("http://localhost:3001/api/v1/paciente/observaciones/", {
+			method: "POST",
+			body: JSON.stringify(jsonString),
+			headers: {
+				Accepts: "application/json",
+				"Content-type": "application/json",
+			},
+		})
+			.then((res) => res.json())
+			.then((info) => {
+				console.log(info);
+				profileObs.innerHTML = info.observaciones + " " + obs;
+				profileObsField.value = "";
+			});
+	} else {
+		alert("Agrega algo a las observaciones antes de guardar.");
+	}
+}
+
+//				Mostrar disponibilidad horaria de citas clínicas				//
+
+function getHoursClin() {}

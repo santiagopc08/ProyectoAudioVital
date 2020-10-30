@@ -1,13 +1,13 @@
-const express = require('express')
+const express = require("express");
 
-const pacienteRoutes = require('./PacienteRoutes')
-const citaClinicaRoutes = require('./CitaClinicaRoutes')
-const citaReparacionesRoutes = require('./CitaReparacionesRoutes')
+const pacienteRoutes = require("./PacienteRoutes");
+const citaClinicaRoutes = require("./CitaClinicaRoutes");
+const citaReparacionesRoutes = require("./CitaReparacionesRoutes");
 
-const router = express.Router()
+const router = express.Router();
 
-router.use('/', pacienteRoutes)
-router.use('/', citaClinicaRoutes)
-router.use('/', citaReparacionesRoutes)
+router.use("/", pacienteRoutes);
+router.use("/", citaClinicaRoutes);
+router.use("/", citaReparacionesRoutes);
 
-module.exports = router
+module.exports = router;

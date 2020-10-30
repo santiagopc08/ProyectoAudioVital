@@ -46,41 +46,15 @@
                     <div class="searchBar">
                         <h3>Buscar paciente:</h3>
                         <input type="text" id="nameSearch" />
-                        <img src="resources/search.svg" alt="search" />
+                        <img onclick="buscar()" src="resources/search.svg" alt="search" />
                     </div>
-                    <div class="searchResults">
-                        <P>Selecciona uno de los nombres para ver su perfil</P>
-                        <a class="internalLink" href="#perfil">
-                            <button>
-                                <p>Juan Alberto</p>
-                                <p>1001025389</p>
-                            </button>
-                        </a>
-                        <a class="internalLink" href="#perfil">
-                            <button>
-                                <p>Juan Alberto</p>
-                                <p>1001025389</p>
-                            </button>
-                        </a>
-                        <a class="internalLink" href="#perfil">
-                            <button>
-                                <p>Juan Alberto</p>
-                                <p>1001025389</p>
-                            </button>
-                        </a>
-                        <a class="internalLink" href="#perfil">
-                            <button>
-                                <p>Juan Alberto</p>
-                                <p>1001025389</p>
-                            </button>
-                        </a>
+                    <div id="searchResultsContainer" class="searchResults">
                     </div>
                 </div>
             </section>
             <!-- Contenedor de perfil -->
             <section id="perfil">
                 <div class="card">
-
                     <h2 class="subtitlePrimary">Perfil del paciente</h2>
                     <div class="perfilContainer">
                         <div class="profileImgContainer">
@@ -88,33 +62,30 @@
                         </div>
                         <div class="perfilItem">
                             <h4>Nombre</h4>
-                            <p>Juan Alberto</p>
+                            <p id="profileName"></p>
                         </div>
                         <div class="perfilItem">
                             <h4>Número de identificación</h4>
-                            <p>11257748</p>
+                            <p id="profileId"></p>
                         </div>
                         <div class="perfilItem">
                             <h4>Cantidad de controles</h4>
-                            <p>5</p>
+                            <p id="profileControlsQ"></p>
                         </div>
                         <div class="perfilItem">
-                            <details>
-                                <summary>Números de teléfono</summary>
-                                <p>3013147894</p>
-                            </details>
+                            <h4>Números de teléfono</h4>
+                            <p id="profilePhone"></p>
                         </div>
                         <div class="perfilItem smlCard">
                             <h4 class="subtitleSecondary">Observaciones</h4>
-                            <p>Patología 1</p>
-                            <p>Medicamento 1</p>
-                            <p>Medicamento 2</p>
+                            <p id="profileObs">Patología 1</p>
                             <div class="inputContainer">
-                                <input class="mInput" type="text" name="observaciones" placeholder="Observación">
+                                <input id="profileObsField" class="mInput" type="text" name="observaciones"
+                                    placeholder="Observación">
                                 <label for="observaciones" class="mLabel lblSecondary">Observación</label>
                                 <div class="d1"></div>
                                 <div class="d2 dSecondary"></div>
-                                <button class="btnSecondary">Agregar</button>
+                                <button onclick="updateObs()" class="btnSecondary">Agregar</button>
                             </div>
                         </div>
                         <div class="perfilItem smlCard">
@@ -246,9 +217,9 @@
                             <img class="profileImg" src="resources/profile.svg" alt="profile">
                         </div>
                         <div class="inputContainer perfilItem">
-                            <input id="newPatientNombre" class="mInput" type="text" name="newPatientNombre"
+                            <input id="newPatientName" class="mInput" type="text" name="newPatientNombre"
                                 placeholder="Nombre completo *">
-                            <label for="newPatientNombre" class="mLabel lblSecondary">Nombre completo *</label>
+                            <label for="newPatientName" class="mLabel lblSecondary">Nombre completo *</label>
                             <div class="d1"></div>
                             <div class="d2 dSecondary"></div>
                         </div>
@@ -268,12 +239,13 @@
                         </div>
                         <div class="inputContainer perfilItem">
                             <input id="newPatientObs" class="mInput" type="text" name="newPatientObs"
-                                placeholder="Observaciones *">
-                            <label for="newPatientObs" class="mLabel lblSecondary">Observaciones *</label>
+                                placeholder="Observaciones">
+                            <label for="newPatientObs" class="mLabel lblSecondary">Observaciones</label>
                             <div class="d1"></div>
                             <div class="d2 dSecondary"></div>
                         </div>
-                        <button style="margin: 1rem auto 0;" class="btnSecondary">Registrar</button>
+                        <button onclick="validateRegFields()" style="margin: 1rem auto 0;"
+                            class="btnSecondary">Registrar</button>
                     </div>
                 </div>
             </section>
