@@ -21,3 +21,5 @@ const server = app.listen(app.get("port"), () => {
 	console.log("El servidor está en:");
 	console.log("http://localhost:" + server.address().port);
 });
+
+module.exports = app
