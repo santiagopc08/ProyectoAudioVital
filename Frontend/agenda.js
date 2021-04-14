@@ -17,13 +17,6 @@ var cantidadCitas = 0;
 
 async function getAppoints() {
 	cantidadCitas = 0;
-	console.log(
-		"http://localhost:3001/api/v1/cita-clinica/pacientes/" +
-			actualDate.getDate() +
-			"-" +
-			(actualMonth + 1) +
-			"-" +
-			actualDate.getFullYear())
 	let response = await fetch(
 		"http://localhost:3001/api/v1/cita-clinica/pacientes/" +
 			actualDate.getDate() +
