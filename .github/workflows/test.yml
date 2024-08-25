@@ -3,6 +3,8 @@ name: CI - Test environment
 on:
   push:
     branches: [ "main" ]
+    paths:
+    - "**"
   pull_request:
     branches: [ "main" ]
 
