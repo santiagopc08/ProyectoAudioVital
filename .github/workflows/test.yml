@@ -2,11 +2,11 @@ name: CI - Test environment
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "master" ]
     paths:
     - "**"
   pull_request:
-    branches: [ "main" ]
+    branches: [ "master" ]
 
 jobs:
   build:
