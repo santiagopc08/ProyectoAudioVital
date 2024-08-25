@@ -67,53 +67,35 @@ exports.citasAgendadasPorDia = (req, res) => {
 }
 
 exports.citaPacientesAgendadaPorDia = async (req, res) => {
-    //La fecha tiene formato d/m/yyyy
-    let fechaP = req.params.fecha
-    let horas = []
-    let cedulas = []
-    let citas
-    let pacientes = []
+    let fechaP = req.params.fecha;
+    try {
+        // Obtener citas por fecha
+        let citas = await CitaClinica.find({ fecha: fechaP }).exec();
 
-    await CitaClinica.find({ fecha: fechaP }).exec().then(result => {
-        citas = result
-    }).catch(err => {
-        res.status(500).send({ message: 'Ha ocurrido un problema con el servidor \n', err })
-        return
-    })
+        let horas = citas.map(cita => cita.hora);
+        let cedulas = citas.map(cita => cita.cedula);
 
-    for (const i in citas) {
-        horas.push(citas[i].hora)
-        cedulas.push(citas[i].cedula)
+        // Buscar pacientes en paralelo usando Promise.all
+        let pacientes = await Promise.all(
+            cedulas.map(cedula => Paciente.findById(cedula).exec())
+        );
+
+        // Verificar si algún paciente no se encontró (puede ser null)
+        if (pacientes.includes(null)) {
+            return res.status(404).send({ message: 'Uno o más pacientes no se encontraron.' });
+        }
+
+        // Preparar la información para enviar
+        let info = pacientes.map((paciente, index) => ({
+            hora: horas[index],
+            nombre: paciente.nombre,
+            cedula: paciente._id,
+            telefono: paciente.telefono
+        }));
+
+        res.status(200).send({ message: info });
+    } catch (error) {
+        // Captura cualquier error y envía una única respuesta
+        res.status(500).send({ message: 'Ha ocurrido un problema con el servidor', error });
     }
-
-    let err0 = false;
-    let errcont;
-
-    for (const i in cedulas) {
-        await Paciente.findById(cedulas[i]).exec().then(result => {
-            pacientes.push(result)
-        }).catch(err => {
-            err0 = true;
-            errcont = err;
-        })
-    }
-    
-    if (err0) {
-        res.status(500).send({ message: 'Ha ocurrido un problema con el servidor: \n', errcont })
-        return
-    }
-
-    let info = []
-    let aux = {}
-    aux = JSON.parse(JSON.stringify(pacientes))
-    for (const i in pacientes) {
-        info.push({
-            hora: horas[i],
-            nombre: aux[i].nombre,
-            cedula: aux[i]._id,
-            telefono: aux[i].telefono
-        })
-    }
-
-    res.status(200).send({ message: info })
-}
+};
