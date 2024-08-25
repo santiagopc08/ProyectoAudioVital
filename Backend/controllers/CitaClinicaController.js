@@ -18,17 +18,18 @@ exports.crearCita = (req, res) => {
                 message: 'No se ha encontrado al paciente, no está registrado'
             })
         } else {
-            CitaClinica.find({hora: horaP, fecha: fechaP }).exec((e, citas) => {
+            CitaClinica.find({ hora: horaP, fecha: fechaP }).exec((e, citas) => {
                 if (err) {
                     return res.status(500).send({ message: 'Ocurrio un error en el server', error: e })
-                }
-                if (citas.length > 0) {
-                    res.status(200).send({ message: 'No hay cita disponible a esa hora' })
                 } else {
-                    cita.save((err, cita) => {
-                        res.status(200).send({message: 'Cita creada exitosamente'})
-                        //utils.show(res, err, cita)
-                    })
+                    if (citas.length > 0) {
+                        res.status(200).send({ message: 'No hay cita disponible a esa hora' })
+                    } else {
+                        cita.save((err, cita) => {
+                            res.status(200).send({ message: 'Cita creada exitosamente' })
+                            //utils.show(res, err, cita)
+                        })
+                    }
                 }
             })
         }
@@ -50,15 +51,15 @@ exports.citasAgendadasPorDia = (req, res) => {
     //La fecha tiene formato d/m/yyyy
     let fechaP = req.params.fecha
 
-    CitaClinica.find({fecha: fechaP}).exec((err, result) => {
-        if(err) throw err
-        
+    CitaClinica.find({ fecha: fechaP }).exec((err, result) => {
+        if (err) throw err
+
         let horas = []
         for (let i = 0; i < result.length; i++) {
             horas.push(result[i].hora)
         }
 
-        res.status(200).send({horas: horas})
+        res.status(200).send({ horas: horas })
     })
 }
 
@@ -70,10 +71,10 @@ exports.citaPacientesAgendadaPorDia = async (req, res) => {
     let citas
     let pacientes = []
 
-    await CitaClinica.find({fecha: fechaP}).exec().then(result => {
+    await CitaClinica.find({ fecha: fechaP }).exec().then(result => {
         citas = result
     }).catch(err => {
-        res.status(500).send({ message: 'Ha ocurrido un problema con el servidor \n', err})
+        res.status(500).send({ message: 'Ha ocurrido un problema con el servidor \n', err })
     })
 
     for (const i in citas) {
@@ -81,12 +82,20 @@ exports.citaPacientesAgendadaPorDia = async (req, res) => {
         cedulas.push(citas[i].cedula)
     }
 
+    let err0 = false;
+    let errcont;
+
     for (const i in cedulas) {
         await Paciente.findById(cedulas[i]).exec().then(result => {
             pacientes.push(result)
         }).catch(err => {
-            res.status(500).send({ message: 'Ha ocurrido un problema con el servidor: \n', err })
+            err0 = true;
+            errcont = err;
         })
+    }
+    
+    if (err0) {
+        res.status(500).send({ message: 'Ha ocurrido un problema con el servidor: \n', errcont })
     }
 
     let info = []
@@ -101,5 +110,5 @@ exports.citaPacientesAgendadaPorDia = async (req, res) => {
         })
     }
 
-    res.status(200).send({message: info})
+    res.status(200).send({ message: info })
 }
