@@ -17,6 +17,7 @@ exports.crearCita = (req, res) => {
             res.status(201).send({
                 message: 'No se ha encontrado al paciente, no está registrado'
             })
+            return
         } else {
             CitaClinica.find({ hora: horaP, fecha: fechaP }).exec((e, citas) => {
                 if (err) {
@@ -24,9 +25,11 @@ exports.crearCita = (req, res) => {
                 } else {
                     if (citas.length > 0) {
                         res.status(200).send({ message: 'No hay cita disponible a esa hora' })
+                        return
                     } else {
                         cita.save((err, cita) => {
                             res.status(200).send({ message: 'Cita creada exitosamente' })
+                            return
                             //utils.show(res, err, cita)
                         })
                     }
@@ -75,6 +78,7 @@ exports.citaPacientesAgendadaPorDia = async (req, res) => {
         citas = result
     }).catch(err => {
         res.status(500).send({ message: 'Ha ocurrido un problema con el servidor \n', err })
+        return
     })
 
     for (const i in citas) {
@@ -96,6 +100,7 @@ exports.citaPacientesAgendadaPorDia = async (req, res) => {
     
     if (err0) {
         res.status(500).send({ message: 'Ha ocurrido un problema con el servidor: \n', errcont })
+        return
     }
 
     let info = []
