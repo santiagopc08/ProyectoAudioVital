@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1724177312968" clover="3.2.0">
-  <project timestamp="1724177312968" name="All files">
-    <metrics statements="225" coveredstatements="160" conditionals="30" coveredconditionals="14" methods="45" coveredmethods="16" elements="300" coveredelements="190" complexity="0" loc="225" ncloc="225" packages="6" files="13" classes="13"/>
+<coverage generated="1724604450321" clover="3.2.0">
+  <project timestamp="1724604450321" name="All files">
+    <metrics statements="225" coveredstatements="162" conditionals="30" coveredconditionals="14" methods="45" coveredmethods="17" elements="300" coveredelements="193" complexity="0" loc="225" ncloc="225" packages="6" files="13" classes="13"/>
     <package name="Backend">
-      <metrics statements="17" coveredstatements="15" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="1"/>
+      <metrics statements="17" coveredstatements="17" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
       <file name="app.js" path="/Users/santiagoperezcastro/Documents/devops/ProyectoAudioVital/Backend/app.js">
-        <metrics statements="17" coveredstatements="15" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="1"/>
+        <metrics statements="17" coveredstatements="17" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -20,8 +20,8 @@
         <line num="15" count="1" type="stmt"/>
         <line num="18" count="1" type="cond" truecount="2" falsecount="0"/>
         <line num="20" count="1" type="stmt"/>
-        <line num="21" count="0" type="stmt"/>
-        <line num="22" count="0" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
         <line num="25" count="1" type="stmt"/>
       </file>
     </package>
