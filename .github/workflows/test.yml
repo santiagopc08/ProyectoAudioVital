@@ -17,4 +17,6 @@ jobs:
 
       - name: Install dependencies n run tests
         run: npm install
-             npm run testcoverage
+
+      - name: test execution
+        run: npm run testcoverage
