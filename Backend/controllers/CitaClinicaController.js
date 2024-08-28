@@ -67,25 +67,28 @@ exports.citasAgendadasPorDia = (req, res) => {
 }
 
 exports.citaPacientesAgendadaPorDia = async (req, res) => {
-    let fechaP = req.params.fecha;
     try {
-        // Obtener citas por fecha
+        let fechaP = req.params.fecha;
+        console.log(`Buscando citas para la fecha: ${fechaP}`);
+
+        // Obtener citas por fecha de un paciente
         let citas = await CitaClinica.find({ fecha: fechaP }).exec();
+        if (!citas || citas.length === 0) {
+            return res.status(404).send({ message: 'No se encontraron citas para esa fecha.' });
+        }
 
         let horas = citas.map(cita => cita.hora);
         let cedulas = citas.map(cita => cita.cedula);
 
-        // Buscar pacientes en paralelo usando Promise.all
         let pacientes = await Promise.all(
             cedulas.map(cedula => Paciente.findById(cedula).exec())
         );
 
-        // Verificar si algún paciente no se encontró (puede ser null)
         if (pacientes.includes(null)) {
+            console.log('Uno o más pacientes no se encontraron.');
             return res.status(404).send({ message: 'Uno o más pacientes no se encontraron.' });
         }
 
-        // Preparar la información para enviar
         let info = pacientes.map((paciente, index) => ({
             hora: horas[index],
             nombre: paciente.nombre,
@@ -93,9 +96,10 @@ exports.citaPacientesAgendadaPorDia = async (req, res) => {
             telefono: paciente.telefono
         }));
 
+        console.log('Enviando la información de las citas:', info);
         res.status(200).send({ message: info });
     } catch (error) {
-        // Captura cualquier error y envía una única respuesta
+        console.error('Error en citaPacientesAgendadaPorDia:', error);
         res.status(500).send({ message: 'Ha ocurrido un problema con el servidor', error });
     }
 };
