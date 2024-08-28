@@ -42,7 +42,7 @@ it('schedule a clinic appointment responding with status code 200', done => {
     .send(data)
     .set('Accept', 'application/json')
     .expect('Content-type', 'application/json; charset=utf-8')
-    .expect(200, done);
+    .expect(201, created);
     
 })
 
