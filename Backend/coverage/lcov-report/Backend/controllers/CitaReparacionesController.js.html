@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">60% </span>
+                <span class="strong">41.81% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>33/55</span>
+                <span class='fraction'>23/55</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>5/10</span>
+                <span class='fraction'>0/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">38.46% </span>
+                <span class="strong">15.38% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>5/13</span>
+                <span class='fraction'>2/13</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">62.26% </span>
+                <span class="strong">43.39% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>33/53</span>
+                <span class='fraction'>23/53</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -177,23 +177,23 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -281,25 +281,25 @@ const utils = require('../handlers/utils')
 const CitaReparaciones = mongoose.model('CitaReparaciones')
 const Paciente = mongoose.model('Paciente')
 &nbsp;
-exports.crearCita = (req, res) =&gt; {
-    const cedula = req.body.cedula
-    const fechaP = req.body.fecha
-    const horaP = req.body.hora
-    const cita = new CitaReparaciones(req.body)
+exports.crearCita = <span class="fstat-no" title="function not covered" >(r</span>eq, res) =&gt; {
+    const cedula = <span class="cstat-no" title="statement not covered" >req.body.cedula</span>
+    const fechaP = <span class="cstat-no" title="statement not covered" >req.body.fecha</span>
+    const horaP = <span class="cstat-no" title="statement not covered" >req.body.hora</span>
+    const cita = <span class="cstat-no" title="statement not covered" >new CitaReparaciones(req.body)</span>
 &nbsp;
-    Paciente.findById(cedula).exec((err, paciente) =&gt; {
-        <span class="missing-if-branch" title="if path not taken" >I</span>if (paciente == undefined || paciente == null) {
+<span class="cstat-no" title="statement not covered" >    Paciente.findById(cedula).exec(<span class="fstat-no" title="function not covered" >(e</span>rr, paciente) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >        if (paciente == undefined || paciente == null) {</span>
 <span class="cstat-no" title="statement not covered" >            res.status(201).send({</span>
                 message: 'No se ha encontrado al paciente, no está registrado'
             })
         } else {
-            CitaReparaciones.find({hora: horaP, fecha: fechaP }).exec((e, citas) =&gt; {
-                <span class="missing-if-branch" title="if path not taken" >I</span>if (err) {
+<span class="cstat-no" title="statement not covered" >            CitaReparaciones.find({hora: horaP, fecha: fechaP }).exec(<span class="fstat-no" title="function not covered" >(e</span>, citas) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >                if (err) {</span>
 <span class="cstat-no" title="statement not covered" >                    return res.status(500).send({ message: 'Ocurrio un error en el server', error: e })</span>
                 }
-                if (citas.length &gt; 0) {
-                    res.status(200).send({ message: 'No hay cita disponible a esa hora' })
-                } else <span class="missing-if-branch" title="else path not taken" >E</span>{
+<span class="cstat-no" title="statement not covered" >                if (citas.length &gt; 0) {</span>
+<span class="cstat-no" title="statement not covered" >                    res.status(200).send({ message: 'No hay cita disponible a esa hora' })</span>
+                } else {
 <span class="cstat-no" title="statement not covered" >                    cita.save(<span class="fstat-no" title="function not covered" >(e</span>rr, cita) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >                        res.status(200).send({message: 'Cita creada exitosamente'})</span>
                         //utils.show(res, err, cita)
@@ -385,7 +385,7 @@ exports.citaPacientesAgendadaPorDia = async (req, res) =&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-08-25T16:47:30.303Z
+                at 2024-09-05T21:41:17.501Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

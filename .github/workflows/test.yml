@@ -25,3 +25,9 @@ jobs:
 
       - name: check results
         run: npm run testcoverage -- --ci
+
+      - name: build docker
+        run: docker build -t myapp .
+      
+      - name: run docker
+        run: docker run --rm -v ${{ github.workspace }}:/app myapp npm run testcoverage
