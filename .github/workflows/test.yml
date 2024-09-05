@@ -22,3 +22,6 @@ jobs:
       - name: test execution
         run: npm run testcoverage
         working-directory: ./Backend
+
+      - name: check results
+        run: npm run testcoverage -- --ci
